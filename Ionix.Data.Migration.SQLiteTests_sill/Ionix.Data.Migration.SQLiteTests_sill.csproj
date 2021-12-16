@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <RootNamespace>Ionix.Data.Migration.SQLiteTests</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Ionix.Data.Migration.SQLite\Ionix.Data.Migration.SQLite.csproj" />
+      <ProjectReference Include="..\Ionix.Data.SQLite\Ionix.Data.SQLite.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentAssertions" Version="6.2.0" />
+      <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.1" />
+      <PackageReference Include="xunit" Version="2.4.1" />
+    </ItemGroup>
+
+</Project>
