@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System;
     using System.Collections;
@@ -16,6 +16,7 @@
             query.Sql(sql, parameters);
             return query;
         }
+
         public static SqlQuery ToQuery(this string sql)
         {
             return new SqlQuery(sql);
@@ -37,8 +38,10 @@
                 inner.Text.Append(alias);
                 return inner;
             }
+
             return null;
         }
+
         public static SqlQuery ToInnerQuery(this SqlQuery query)
         {
             return ToInnerQuery(query, "T");
@@ -50,7 +53,8 @@
             CachedTypes.String,
             CachedTypes.ByteArray
         };
-        public static SqlQuery ToQuery2(this string sql, object parameters)// burada anonim tip oluştur
+
+        public static SqlQuery ToQuery2(this string sql, object parameters) // burada anonim tip oluştur
         {
             SqlQuery q = new SqlQuery();
             if (null != parameters)
@@ -80,6 +84,7 @@
                                     q.Parameters.Add(pi.Name + index, item);
                                     ++index;
                                 }
+
                                 sb.Remove(sb.Length - 1, 1);
                                 sb.Append(')');
 
@@ -88,10 +93,12 @@
                             }
                         }
                     }
+
                     if (!flag)
                         q.Parameter(pi.Name, value);
                 }
             }
+
             q.Sql(sql);
 
             return q;
@@ -105,6 +112,5 @@
         //    q =
         //        "select * from Person p where p.Id in @Ids and p.No in @Nos and p.Adi like '@Adi%'".ToQuery2(
         //            new {Ids = new[] {1, 2, 3}, Nos = new[] {"12", "42"}, Adi = "Mehmet"});
-
     }
 }

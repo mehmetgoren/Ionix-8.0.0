@@ -1,5 +1,6 @@
 ﻿namespace Ionix.Data.PostgreSql.BulkCopy
 {
+    using Common;
     using Npgsql;
 
     public class CommandFactoryWithBulkCopy : CommandFactory

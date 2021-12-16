@@ -1,10 +1,11 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System;
 
     partial class DbAccess
     {
         private static readonly object PreExecuteSqlEvent = new object();
+
         public event PreExecuteSqlEventHandler PreExecuteSql
         {
             add
@@ -22,6 +23,7 @@
                 }
             }
         }
+
         protected virtual void OnPreExecuteSql(SqlQuery query)
         {
             PreExecuteSqlEventHandler fPtr = (PreExecuteSqlEventHandler)this.events[DbAccess.PreExecuteSqlEvent];
@@ -34,6 +36,7 @@
 
         //executionStart sadece execution değil genel olarak alınmalı. Yabi Fonksiyonun başında. Böylece provider lardan kaynaklanan zaman kaybıda görülebilir.
         private static readonly object ExecuteSqlCompleteEvent = new object();
+
         public event ExecuteSqlCompleteEventHandler ExecuteSqlComplete
         {
             add
@@ -51,12 +54,16 @@
                 }
             }
         }
-        protected virtual void OnExecuteSqlComplete(SqlQuery query, DateTime executionStart, Exception executingException)
+
+        protected virtual void OnExecuteSqlComplete(SqlQuery query, DateTime executionStart,
+            Exception executingException)
         {
-            ExecuteSqlCompleteEventHandler fPtr = (ExecuteSqlCompleteEventHandler)this.events[DbAccess.ExecuteSqlCompleteEvent];
+            ExecuteSqlCompleteEventHandler fPtr =
+                (ExecuteSqlCompleteEventHandler)this.events[DbAccess.ExecuteSqlCompleteEvent];
             if (fPtr != null)
             {
-                ExecuteSqlCompleteEventArgs e = new ExecuteSqlCompleteEventArgs(this, query, executionStart, DateTime.Now, executingException);
+                ExecuteSqlCompleteEventArgs e =
+                    new ExecuteSqlCompleteEventArgs(this, query, executionStart, DateTime.Now, executingException);
                 fPtr(e);
             }
         }

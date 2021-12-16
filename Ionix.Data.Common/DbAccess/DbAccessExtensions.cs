@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System;
     using System.Collections.Generic;
@@ -16,7 +16,7 @@
         }
 
 
-        #region   |   Execute   |
+        #region |   Execute   |
 
         public static IList<object> ExecuteScalarList(this IDbAccess dataAccess, SqlQuery query)
         {
@@ -32,8 +32,10 @@
                     ret.Add(value);
                 }
             }
+
             return ret;
         }
+
         public static async Task<IList<object>> ExecuteScalarListAsync(this IDbAccess dataAccess, SqlQuery query)
         {
             EnsureDbAccess(dataAccess);
@@ -48,6 +50,7 @@
                     ret.Add(value);
                 }
             }
+
             return ret;
         }
 
@@ -57,6 +60,7 @@
 
             return dataAccess.CreateDataReader(query, CommandBehavior.Default);
         }
+
         public static Task<AutoCloseCommandDataReader> CreateDataReaderAsync(this IDbAccess dataAccess, SqlQuery query)
         {
             EnsureDbAccess(dataAccess);
@@ -79,6 +83,7 @@
                 return default(T);
             }
         }
+
         public static async Task<T> ExecuteScalarAsync<T>(this IDbAccess dataAccess, SqlQuery query)
         {
             EnsureDbAccess(dataAccess);
@@ -118,8 +123,10 @@
                     ret.Add(item);
                 }
             }
+
             return ret;
         }
+
         public static async Task<IList<T>> ExecuteScalarListAsync<T>(this IDbAccess dataAccess, SqlQuery query)
         {
             EnsureDbAccess(dataAccess);
@@ -144,13 +151,13 @@
                     ret.Add(item);
                 }
             }
+
             return ret;
         }
 
-
         #endregion
 
-        #region   |   Dynamic   |
+        #region |   Dynamic   |
 
         public static dynamic QuerySingle(this IDbAccess dataAccess, SqlQuery query)
         {
@@ -183,6 +190,7 @@
 
             return null;
         }
+
         public static async Task<dynamic> QuerySingleAsync(this IDbAccess dataAccess, SqlQuery query)
         {
             EnsureDbAccess(dataAccess);
@@ -247,6 +255,7 @@
 
             return ret;
         }
+
         public static async Task<IList<dynamic>> QueryAsync(this IDbAccess dataAccess, SqlQuery query)
         {
             EnsureDbAccess(dataAccess);
@@ -291,7 +300,7 @@
             try
             {
                 dr = dataAccess.CreateDataReader(query, CommandBehavior.Default);
-                ret.Load(dr);//.net standart 2.0 da not suppurted yiyoruz, final da düzelmesi lazım.
+                ret.Load(dr); //.net standart 2.0 da not suppurted yiyoruz, final da düzelmesi lazım.
             }
             finally
             {
@@ -300,6 +309,7 @@
 
             return ret;
         }
+
         public static async Task<DataTable> QueryDataTableAsync(this IDbAccess dataAccess, SqlQuery query)
         {
             EnsureDbAccess(dataAccess);
@@ -309,7 +319,7 @@
             try
             {
                 dr = await dataAccess.CreateDataReaderAsync(query, CommandBehavior.Default);
-                ret.Load(dr);//.net standart 2.0 da not suppurted yiyoruz, final da düzelmesi lazım.
+                ret.Load(dr); //.net standart 2.0 da not suppurted yiyoruz, final da düzelmesi lazım.
             }
             finally
             {

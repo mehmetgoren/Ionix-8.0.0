@@ -1,6 +1,7 @@
 ﻿namespace Ionix.Data.PostgreSql
 {
     using Utils.Extensions;
+    using Common;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -9,7 +10,8 @@
     {
         public EntityCommandUpdate(IDbAccess dataAccess)
             : base(dataAccess)
-        { }
+        {
+        }
 
         public HashSet<string> UpdatedFields { get; set; }
 
@@ -17,6 +19,7 @@
         {
             return this.Execute(entity, provider);
         }
+
         Task<int> IEntityCommandUpdate.UpdateAsync<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             return this.ExecuteAsync(entity, provider);
@@ -24,11 +27,13 @@
 
         private SqlQuery CreateQuery(object entity, IEntityMetaData metaData)
         {
-            EntitySqlQueryBuilderUpdate builder = new EntitySqlQueryBuilderUpdate() { UpdatedFields = this.UpdatedFields };
+            EntitySqlQueryBuilderUpdate builder = new EntitySqlQueryBuilderUpdate()
+                { UpdatedFields = this.UpdatedFields };
             SqlQuery query = builder.CreateQuery(entity, metaData, 0);
 
             return query;
         }
+
         public override int Execute<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             if (null == entity)
@@ -39,6 +44,7 @@
 
             return base.DataAccess.ExecuteNonQuery(query);
         }
+
         public override Task<int> ExecuteAsync<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             if (null == entity)
@@ -55,7 +61,8 @@
     {
         public EntityCommandInsert(IDbAccess dataAccess)
             : base(dataAccess)
-        { }
+        {
+        }
 
         public HashSet<string> InsertFields { get; set; }
 
@@ -63,6 +70,7 @@
         {
             return this.Execute(entity, provider);
         }
+
         Task<int> IEntityCommandInsert.InsertAsync<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             return this.ExecuteAsync(entity, provider);
@@ -70,12 +78,14 @@
 
         private (SqlQuery, PropertyMetaData) Prepare(object entity, IEntityMetaData metaData)
         {
-            EntitySqlQueryBuilderInsert builder = new EntitySqlQueryBuilderInsert() { InsertFields = this.InsertFields };
+            EntitySqlQueryBuilderInsert builder = new EntitySqlQueryBuilderInsert()
+                { InsertFields = this.InsertFields };
             PropertyMetaData identity;
             SqlQuery query = builder.CreateQuery(entity, metaData, 0, out identity);
 
             return (query, identity);
         }
+
         public override int Execute<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             IEntityMetaData metaData = provider.EnsureCreateEntityMetaData<TEntity>();
@@ -93,6 +103,7 @@
                 return base.DataAccess.ExecuteNonQuery(query);
             }
         }
+
         public override async Task<int> ExecuteAsync<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             IEntityMetaData metaData = provider.EnsureCreateEntityMetaData<TEntity>();
@@ -116,7 +127,8 @@
     {
         public EntityCommandUpsert(IDbAccess dataAccess)
             : base(dataAccess)
-        { }
+        {
+        }
 
         public HashSet<string> UpdatedFields { get; set; }
 
@@ -126,6 +138,7 @@
         {
             return this.Execute(entity, provider);
         }
+
         Task<int> IEntityCommandUpsert.UpsertAsync<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             return this.ExecuteAsync(entity, provider);
@@ -133,25 +146,30 @@
 
         public override int Execute<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
-            EntityCommandUpdate updateCmd = new EntityCommandUpdate(base.DataAccess) { UpdatedFields = this.UpdatedFields };
+            EntityCommandUpdate updateCmd = new EntityCommandUpdate(base.DataAccess)
+                { UpdatedFields = this.UpdatedFields };
 
             int ret = updateCmd.Execute(entity, provider);
-            if (ret == 0)// if not update then insert.
+            if (ret == 0) // if not update then insert.
             {
-                EntityCommandInsert insertCmd = new EntityCommandInsert(base.DataAccess) { InsertFields = this.InsertFields };
+                EntityCommandInsert insertCmd = new EntityCommandInsert(base.DataAccess)
+                    { InsertFields = this.InsertFields };
                 return insertCmd.Execute(entity, provider);
             }
 
             return ret;
         }
+
         public override async Task<int> ExecuteAsync<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
-            EntityCommandUpdate updateCmd = new EntityCommandUpdate(base.DataAccess) { UpdatedFields = this.UpdatedFields };
+            EntityCommandUpdate updateCmd = new EntityCommandUpdate(base.DataAccess)
+                { UpdatedFields = this.UpdatedFields };
 
             int ret = await updateCmd.ExecuteAsync(entity, provider);
-            if (ret == 0)// if not update then insert.
+            if (ret == 0) // if not update then insert.
             {
-                EntityCommandInsert insertCmd = new EntityCommandInsert(base.DataAccess) { InsertFields = this.InsertFields };
+                EntityCommandInsert insertCmd = new EntityCommandInsert(base.DataAccess)
+                    { InsertFields = this.InsertFields };
                 return await insertCmd.ExecuteAsync(entity, provider);
             }
 
@@ -163,12 +181,14 @@
     {
         public EntityCommandDelete(IDbAccess dataAccess)
             : base(dataAccess)
-        { }
+        {
+        }
 
         int IEntityCommandDelete.Delete<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             return this.Execute(entity, provider);
         }
+
         Task<int> IEntityCommandDelete.DeleteAsync<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             return this.ExecuteAsync(entity, provider);
@@ -184,6 +204,7 @@
 
             return query;
         }
+
         public override int Execute<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             if (null == entity)

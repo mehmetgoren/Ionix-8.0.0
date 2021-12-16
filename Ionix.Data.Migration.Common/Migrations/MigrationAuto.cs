@@ -1,9 +1,9 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
     using Utils.Extensions;
     using System;
     using System.Collections.Generic;
-    using Data;
+    using Ionix.Data.Common;
     using System.Linq;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Reflection;
@@ -13,17 +13,22 @@
     public abstract class MigrationAuto : Migration
     {
         protected MigrationAuto(MigrationVersion version)
-            : base(version) { }
+            : base(version)
+        {
+        }
 
 
-        protected abstract IEnumerable<Type> GetEntityTypes();//örneğin assembly versin.
+        protected abstract IEnumerable<Type> GetEntityTypes(); //örneğin assembly versin.
 
-        private readonly Lazy<IMigrationService> migrationService = new Lazy<IMigrationService>(Injector.GetInstance<IMigrationService>);
+        private readonly Lazy<IMigrationService> migrationService =
+            new Lazy<IMigrationService>(Injector.GetInstance<IMigrationService>);
+
         protected IMigrationService MigrationService => migrationService.Value;
 
         public sealed override bool IsBuiltIn => true;
 
-        private IEnumerable<Type> GetEntityTypesWithCheckTableAttributes() => this.GetEntityTypes()?.Where(p => p.GetCustomAttribute<TableAttribute>() != null);
+        private IEnumerable<Type> GetEntityTypesWithCheckTableAttributes() =>
+            this.GetEntityTypes()?.Where(p => p.GetCustomAttribute<TableAttribute>() != null);
 
         public override SqlQuery GenerateQuery()
         {
@@ -38,8 +43,10 @@
                     if (null != migrationVersionAttr && !String.IsNullOrEmpty(migrationVersionAttr.MigrationVersion))
                     {
                         string migrationVersion = migrationVersionAttr.MigrationVersion;
-                        flag = !String.IsNullOrEmpty(migrationVersion) && new MigrationVersion(migrationVersion) == this.Version;
+                        flag = !String.IsNullOrEmpty(migrationVersion) &&
+                               new MigrationVersion(migrationVersion) == this.Version;
                     }
+
                     if (flag)
                         filteredEntityTypes.Add(migrationType);
                 }
@@ -47,7 +54,8 @@
                 if (!filteredEntityTypes.IsNullOrEmpty())
                 {
                     filteredEntityTypes = SortTypesHierarchical(filteredEntityTypes);
-                    return this.MigrationService.MigrationSqlQueryBuilder.CreateTable(filteredEntityTypes,  DbSchemaMetaDataProvider.Instance, this.MigrationService.ColumnDbTypeResolver);
+                    return this.MigrationService.MigrationSqlQueryBuilder.CreateTable(filteredEntityTypes,
+                        DbSchemaMetaDataProvider.Instance, this.MigrationService.ColumnDbTypeResolver);
                 }
             }
 
@@ -65,22 +73,24 @@
                 {
                     Type entiyType = list[j];
 
-                    IEnumerable<TableForeignKeyAttribute> tfkas = entiyType.GetCustomAttributes<TableForeignKeyAttribute>();
+                    IEnumerable<TableForeignKeyAttribute> tfkas =
+                        entiyType.GetCustomAttributes<TableForeignKeyAttribute>();
                     if (null != tfkas)
                     {
                         foreach (TableForeignKeyAttribute tfka in tfkas)
                         {
-                            Type parentTableType = list.FirstOrDefault(type => AttributeExtension.GetTableName(type) == tfka.ReferenceTable);
+                            Type parentTableType = list.FirstOrDefault(type =>
+                                AttributeExtension.GetTableName(type) == tfka.ReferenceTable);
                             if (null == parentTableType)
                                 throw new InvalidOperationException("parent table was not found.");
 
-                            if (parentTableType != entiyType)//if the table is not self referenced
+                            if (parentTableType != entiyType) //if the table is not self referenced
                             {
                                 int parentIndex = list.IndexOf(parentTableType);
                                 if (-1 == parentIndex)
                                     throw new InvalidOperationException("parent table was not found.");
 
-                                if (parentIndex >= j)//yani daha sonda ise.
+                                if (parentIndex >= j) //yani daha sonda ise.
                                 {
                                     linkedList.Remove(parentTableType);
                                     linkedList.AddBefore(linkedList.Find(entiyType), parentTableType);
@@ -90,7 +100,6 @@
                             }
                         }
                     }
-                    
                 }
 
                 SetList:

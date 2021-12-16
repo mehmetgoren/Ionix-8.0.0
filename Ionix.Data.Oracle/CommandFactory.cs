@@ -1,12 +1,14 @@
 ﻿namespace Ionix.Data.Oracle
 {
     using System;
+    using Ionix.Data.Common;
 
     public class CommandFactory : CommandFactoryBase
     {
         public CommandFactory(IDbAccess dataAccess)
             : base(dataAccess)
-        { }
+        {
+        }
 
         public override char ParameterPrefix => GlobalInternal.Prefix;
 

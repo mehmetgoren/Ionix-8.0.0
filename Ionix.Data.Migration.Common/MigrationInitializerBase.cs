@@ -1,21 +1,25 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
     using System;
     using System.Reflection;
-    using Data;
+    using Ionix.Data.Common;
 
     public abstract class MigrationInitializerBase
     {
         public bool CheckTransactionalDbAccess { get; set; }
 
         private readonly Action backUp;
+
         protected MigrationInitializerBase(Action backUp)
         {
             this.backUp = backUp;
             this.CheckTransactionalDbAccess = true;
         }
+
         protected MigrationInitializerBase()
-            : this(null) { }
+            : this(null)
+        {
+        }
 
         private static bool _isRegistered;
         protected abstract void RegisterMigrationServices();
@@ -47,7 +51,7 @@
                 runner.DatabaseStatus.ValidateMigrationsVersions();
 
                 if (throwIfNotLatestVersion)
-                    runner.DatabaseStatus.ThrowIfNotLatestVersion();//?
+                    runner.DatabaseStatus.ThrowIfNotLatestVersion(); //?
 
                 runner.UpdateToLatest();
                 return true;

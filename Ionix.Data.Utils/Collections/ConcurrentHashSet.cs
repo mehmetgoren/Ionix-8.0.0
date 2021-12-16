@@ -1,4 +1,4 @@
-﻿namespace Ionix.Utils.Collections
+﻿namespace Ionix.Data.Utils.Collections
 {
     using System;
     using System.Collections.Generic;
@@ -13,11 +13,13 @@
         private sealed class Write : IDisposable
         {
             private readonly ReaderWriterLockSlim _lock;
+
             public Write(ConcurrentHashSet<T> parent)
             {
                 this._lock = parent._lock;
                 this._lock.EnterWriteLock();
             }
+
             public void Dispose()
             {
                 if (this._lock.IsWriteLockHeld) this._lock.ExitWriteLock();
@@ -27,11 +29,13 @@
         private sealed class Read : IDisposable
         {
             private readonly ReaderWriterLockSlim _lock;
+
             public Read(ConcurrentHashSet<T> parent)
             {
                 this._lock = parent._lock;
                 this._lock.EnterReadLock();
             }
+
             public void Dispose()
             {
                 if (this._lock.IsWriteLockHeld) this._lock.ExitReadLock();
@@ -39,6 +43,7 @@
         }
 
         #region Implementation of ICollection<T> ...ish
+
         public bool Add(T item)
         {
             using (new Write(this))
@@ -81,24 +86,29 @@
                 }
             }
         }
+
         #endregion
 
         #region Dispose
+
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
+
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
                 if (this._lock != null)
                     this._lock.Dispose();
         }
+
         ~ConcurrentHashSet()
         {
             this.Dispose(false);
         }
+
         #endregion
 
         void ICollection<T>.Add(T item)

@@ -3,12 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Ionix.Data.Common;
 
     public class EntityCommandUpdate : EntityCommandExecute, IEntityCommandUpdate
     {
         public EntityCommandUpdate(IDbAccess dataAccess)
             : base(dataAccess)
-        { }
+        {
+        }
 
         public HashSet<string> UpdatedFields { get; set; }
 
@@ -16,6 +18,7 @@
         {
             return this.Execute(entity, provider);
         }
+
         Task<int> IEntityCommandUpdate.UpdateAsync<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             return this.ExecuteAsync(entity, provider);
@@ -23,10 +26,12 @@
 
         private SqlQuery CreateQuery(object entity, IEntityMetaData metaData)
         {
-            EntitySqlQueryBuilderUpdate builder = new EntitySqlQueryBuilderUpdate() { UpdatedFields = this.UpdatedFields };
+            EntitySqlQueryBuilderUpdate builder = new EntitySqlQueryBuilderUpdate()
+                { UpdatedFields = this.UpdatedFields };
             SqlQuery query = builder.CreateQuery(entity, metaData, 0);
             return query;
         }
+
         public override int Execute<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             if (null == entity)
@@ -37,6 +42,7 @@
 
             return base.DataAccess.ExecuteNonQuery(query);
         }
+
         public override Task<int> ExecuteAsync<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             if (null == entity)
@@ -53,7 +59,8 @@
     {
         public EntityCommandInsert(IDbAccess dataAccess)
             : base(dataAccess)
-        { }
+        {
+        }
 
         public HashSet<string> InsertFields { get; set; }
 
@@ -61,6 +68,7 @@
         {
             return this.Execute(entity, provider);
         }
+
         Task<int> IEntityCommandInsert.InsertAsync<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             return this.ExecuteAsync(entity, provider);
@@ -68,13 +76,16 @@
 
         private (SqlQuery, PropertyMetaData) Prepare(object entity, IEntityMetaData metaData)
         {
-            EntitySqlQueryBuilderInsert builder = new EntitySqlQueryBuilderInsert(base.DataAccess, false) { InsertFields = this.InsertFields };
+            EntitySqlQueryBuilderInsert builder = new EntitySqlQueryBuilderInsert(base.DataAccess, false)
+                { InsertFields = this.InsertFields };
             PropertyMetaData sequenceIdentity;
             SqlQuery query = builder.CreateQuery(entity, metaData, 0, out sequenceIdentity);
 
             return (query, sequenceIdentity);
         }
-        internal static void SetIdentityValue(object entity, IEntityMetaData metaData, SqlQuery query, PropertyMetaData sequenceIdentity)
+
+        internal static void SetIdentityValue(object entity, IEntityMetaData metaData, SqlQuery query,
+            PropertyMetaData sequenceIdentity)
         {
             if (null != sequenceIdentity)
             {
@@ -84,7 +95,7 @@
             }
         }
 
-        public override int Execute<TEntity>(TEntity entity, IEntityMetaDataProvider provider)//for Single
+        public override int Execute<TEntity>(TEntity entity, IEntityMetaDataProvider provider) //for Single
         {
             if (null == entity)
                 return 0;
@@ -98,7 +109,8 @@
             return ret;
         }
 
-        public override async Task<int> ExecuteAsync<TEntity>(TEntity entity, IEntityMetaDataProvider provider)//for Single
+        public override async Task<int>
+            ExecuteAsync<TEntity>(TEntity entity, IEntityMetaDataProvider provider) //for Single
         {
             if (null == entity)
                 return 0;
@@ -117,7 +129,8 @@
     {
         public EntityCommandUpsert(IDbAccess dataAccess)
             : base(dataAccess)
-        { }
+        {
+        }
 
         public HashSet<string> UpdatedFields { get; set; }
 
@@ -127,6 +140,7 @@
         {
             return this.Execute(entity, provider);
         }
+
         Task<int> IEntityCommandUpsert.UpsertAsync<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             return this.ExecuteAsync(entity, provider);
@@ -134,12 +148,14 @@
 
         private (SqlQuery, PropertyMetaData) Prepare(object entity, IEntityMetaData metaData)
         {
-            EntitySqlQueryBuilderUpsert builder = new EntitySqlQueryBuilderUpsert(this.DataAccess, false) { UpdatedFields = this.UpdatedFields, InsertFields = this.InsertFields };
+            EntitySqlQueryBuilderUpsert builder = new EntitySqlQueryBuilderUpsert(this.DataAccess, false)
+                { UpdatedFields = this.UpdatedFields, InsertFields = this.InsertFields };
             PropertyMetaData sequenceIdentity;
             SqlQuery query = builder.CreateQuery(entity, metaData, 0, out sequenceIdentity);
 
             return (query, sequenceIdentity);
         }
+
         public override int Execute<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             if (null == entity)
@@ -153,6 +169,7 @@
 
             return ret;
         }
+
         public override async Task<int> ExecuteAsync<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             if (null == entity)
@@ -172,12 +189,14 @@
     {
         public EntityCommandDelete(IDbAccess dataAccess)
             : base(dataAccess)
-        { }
+        {
+        }
 
         int IEntityCommandDelete.Delete<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             return this.Execute(entity, provider);
         }
+
         Task<int> IEntityCommandDelete.DeleteAsync<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             return this.ExecuteAsync(entity, provider);
@@ -193,6 +212,7 @@
 
             return query;
         }
+
         public override int Execute<TEntity>(TEntity entity, IEntityMetaDataProvider provider)
         {
             if (null == entity)

@@ -1,7 +1,7 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
     using System;
-    using Data;
+    using Ionix.Data.Common;
 
     public abstract class Column : ISqlQueryProvider
     {
@@ -20,7 +20,7 @@
 
         protected string GetNullStatement()
         {
-            return this.NotNull ? " NOT NULL" : "";//var sayılan NULL olduğu için belirtmeye gerek yok.
+            return this.NotNull ? " NOT NULL" : ""; //var sayılan NULL olduğu için belirtmeye gerek yok.
         }
 
         protected string GetDefaultStatement()

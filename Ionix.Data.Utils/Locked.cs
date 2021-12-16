@@ -1,4 +1,4 @@
-﻿namespace Ionix.Utils
+﻿namespace Ionix.Data.Utils
 {
     using System;
 
@@ -23,20 +23,24 @@
                 this.value = value;
             }
         }
+
         public bool IsLocked => this.isLocked;
 
         public void Lock()
         {
             this.isLocked = true;
         }
+
         public void Unlock()
         {
             this.isLocked = false;
         }
+
         public static bool operator ==(Locked<T> lhs, Locked<T> rhs)
         {
             return lhs.Equals(rhs);
         }
+
         public static bool operator !=(Locked<T> lhs, Locked<T> rhs)
         {
             return !(lhs == rhs);
@@ -48,6 +52,7 @@
             {
                 return this.value.Equals(other.value);
             }
+
             return other.value == null;
         }
 
@@ -57,8 +62,10 @@
             {
                 this.Equals((Locked<T>)obj);
             }
+
             return false;
         }
+
         public override int GetHashCode()
         {
             if (null != this.value)
@@ -75,6 +82,7 @@
     public sealed class LockScope : IDisposable
     {
         private readonly ILockable lockable;
+
         public LockScope(ILockable lockable)
         {
             if (null == lockable)
@@ -83,6 +91,7 @@
             this.lockable = lockable;
             this.lockable.Lock();
         }
+
         public void Dispose()
         {
             this.lockable.Unlock();
@@ -97,7 +106,8 @@
 
         private readonly object unlockObjectParameter;
 
-        public FunctionScope(Action<object> lockMethod, object lockObjectParameter, Action<object> unlockMethod, object unlockObjectParameter)
+        public FunctionScope(Action<object> lockMethod, object lockObjectParameter, Action<object> unlockMethod,
+            object unlockObjectParameter)
         {
             if (null == lockMethod)
                 throw new ArgumentNullException(nameof(lockMethod));
@@ -111,9 +121,12 @@
 
             this.lockMethod(lockObjectParameter);
         }
+
         public FunctionScope(Action<object> lockMethod, Action<object> unlockMethod)
             : this(lockMethod, null, unlockMethod, null)
-        { }
+        {
+        }
+
         public void Dispose()
         {
             this.unlockMethod(this.unlockObjectParameter);

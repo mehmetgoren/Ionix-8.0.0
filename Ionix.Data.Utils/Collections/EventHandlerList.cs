@@ -1,4 +1,4 @@
-﻿namespace Ionix.Utils.Collections
+﻿namespace Ionix.Data.Utils.Collections
 {
     using System;
 
@@ -40,6 +40,7 @@
                     listEntry.handler = value;
                     return;
                 }
+
                 this.head = new EventHandlerList.ListEntry(key, value, this.head);
             }
         }
@@ -55,6 +56,7 @@
                 listEntry.handler = Delegate.Combine(listEntry.handler, value);
                 return;
             }
+
             this.head = new EventHandlerList.ListEntry(key, value, this.head);
         }
 
@@ -81,6 +83,7 @@
             {
                 next = next.next;
             }
+
             return next;
         }
 

@@ -1,6 +1,6 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
-    using Data;
+    using Ionix.Data.Common;
 
     public interface IColumnDbTypeResolver
     {

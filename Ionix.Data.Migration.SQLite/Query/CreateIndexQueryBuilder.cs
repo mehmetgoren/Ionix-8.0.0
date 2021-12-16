@@ -1,9 +1,10 @@
 ﻿namespace Ionix.Data.Migration.SQLite
 {
-    using Ionix.Utils.Extensions;
+    using Data.Common;
+    using Common;
+    using Utils.Extensions;
     using System;
     using System.Text;
-    using Data;
 
     //test et ancak, tablo oluştuktan sonra çalışmalı sanki.
     internal sealed class CreateIndexQueryBuilder : ISqlQueryProvider
@@ -19,7 +20,6 @@
             {
                 throw new ArgumentException("TableIndex.Fields can not be null or empty");
             }
-
         }
 
         public SqlQuery ToQuery()
@@ -33,6 +33,7 @@
                 {
                     sb.Append(field.Trim()).Append('_');
                 }
+
                 sb.Remove(sb.Length - 1, 1);
                 if (sb.Length > pgMaxNameLinegth)
                     sb.Remove(pgMaxNameLinegth, sb.Length - pgMaxNameLinegth);
@@ -45,6 +46,7 @@
             {
                 query.Sql(field).Sql(", ");
             }
+
             query.Text.Remove(query.Text.Length - 2, 2);
             query.Sql(");");
 

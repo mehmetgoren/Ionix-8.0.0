@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System;
     using System.Collections.Generic;
@@ -9,6 +9,7 @@
         int Execute<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider);
         Task<int> ExecuteAsync<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider);
     }
+
     public abstract class BatchCommandExecute : IBatchCommandExecute
     {
         protected BatchCommandExecute(IDbAccess dataAccess)
@@ -18,10 +19,13 @@
 
             this.DataAccess = dataAccess;
         }
+
         public IDbAccess DataAccess { get; }
 
         public abstract int Execute<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider);
-        public abstract Task<int> ExecuteAsync<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider);
+
+        public abstract Task<int> ExecuteAsync<TEntity>(IEnumerable<TEntity> entityList,
+            IEntityMetaDataProvider provider);
     }
 
     public interface IBatchCommandUpdate

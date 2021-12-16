@@ -1,4 +1,4 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
     using System;
     using System.Collections.Generic;
@@ -22,6 +22,7 @@
             {
                 return;
             }
+
             Assemblies.Add(assembly);
         }
 
@@ -53,6 +54,7 @@
             {
                 return MigrationVersion.Default();
             }
+
             return GetAllMigrations()
                 .Max(m => m.Version);
         }

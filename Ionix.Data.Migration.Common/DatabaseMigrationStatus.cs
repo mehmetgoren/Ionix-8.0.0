@@ -1,9 +1,9 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Data;
+    using Ionix.Data.Common;
 
     public class DatabaseMigrationStatus
     {
@@ -15,7 +15,7 @@
             this.runner = runner ?? throw new ArgumentNullException(nameof(runner));
         }
 
-        public IEnumerable<DatabaseVersionBase> GetDatabseVersions()//İlk migration tablosu burada oluşyor.
+        public IEnumerable<DatabaseVersionBase> GetDatabseVersions() //İlk migration tablosu burada oluşyor.
         {
             IMigrationService service = Injector.GetInstance<IMigrationService>();
             if (!service.IsDatabaseVersionTableCreated(this.runner.Cmd))
@@ -45,15 +45,20 @@
 
             var databaseVersion = this.GetVersion();
             var migrationVersion = this.runner.MigrationReflection.LatestVersion();
-            throw new Exception($"The migrations versions are not match. The database' s version is '{databaseVersion}', and  migration's version is '{migrationVersion }'");
+            throw new Exception(
+                $"The migrations versions are not match. The database' s version is '{databaseVersion}', and  migration's version is '{migrationVersion}'");
         }
 
         public void ValidateMigrationsVersions()
         {
-            var dbAllMigrations = this.GetDatabseVersions().Where(p => p.Version != Migration000.VersionNo).ToList();//.AsQueryable() // in memory but this will never get big enough to matter
-               // .OrderBy(v => v.Version).ToList();
+            var dbAllMigrations =
+                this.GetDatabseVersions().Where(p => p.Version != Migration000.VersionNo)
+                    .ToList(); //.AsQueryable() // in memory but this will never get big enough to matter
+            // .OrderBy(v => v.Version).ToList();
 
-            var incompletedVersions = dbAllMigrations.Where(p => p.Version != Migration000.VersionNo && p.CompletedOn == null).Select(m => m.Version).ToList();
+            var incompletedVersions = dbAllMigrations
+                .Where(p => p.Version != Migration000.VersionNo && p.CompletedOn == null).Select(m => m.Version)
+                .ToList();
             if (incompletedVersions.Any())
             {
                 throw new MigrationException($"A migrations : {string.Join(",", incompletedVersions)} are incomplete.");
@@ -63,7 +68,8 @@
 
             if (dbAllMigrations.Count > appAllMigrations.Count)
             {
-                throw new MigrationException($"A migrations count in db ({dbAllMigrations.Count}) is higher than application migration count ({appAllMigrations.Count}). Migrations names : {string.Join(",", dbAllMigrations.Skip(appAllMigrations.Count).Select(m => m.Version))}");
+                throw new MigrationException(
+                    $"A migrations count in db ({dbAllMigrations.Count}) is higher than application migration count ({appAllMigrations.Count}). Migrations names : {string.Join(",", dbAllMigrations.Skip(appAllMigrations.Count).Select(m => m.Version))}");
             }
 
             for (int i = 0; i < dbAllMigrations.Count; i++)
@@ -72,7 +78,8 @@
                 Migration appAllMigration = appAllMigrations[i];
                 if (dbAllMigration.Version != appAllMigration.Version)
                 {
-                    throw new MigrationException($"A migration conflict has been detected at index: {i}. The db's version is \"{dbAllMigration.Version}\" and application's version is \"{appAllMigration.Version}\".");
+                    throw new MigrationException(
+                        $"A migration conflict has been detected at index: {i}. The db's version is \"{dbAllMigration.Version}\" and application's version is \"{appAllMigration.Version}\".");
                 }
 
                 if (!appAllMigration.IsBuiltIn)
@@ -80,7 +87,8 @@
                     string generatedQuery = appAllMigration.GenerateQuery().ToString();
                     if (dbAllMigration.Script != generatedQuery)
                     {
-                        throw new MigrationException($"A migration conflict script has been detected at index: {i}. The db's version: '{dbAllMigration.Version}'. and application's version is \n{dbAllMigration.Script}\n\nin application is:\n{generatedQuery}");
+                        throw new MigrationException(
+                            $"A migration conflict script has been detected at index: {i}. The db's version: '{dbAllMigration.Version}'. and application's version is \n{dbAllMigration.Script}\n\nin application is:\n{generatedQuery}");
                     }
                 }
             }
@@ -90,17 +98,18 @@
         {
             var lastAppliedMigration = this.GetLastGetDatabseVersions();
             return lastAppliedMigration == null
-                       ? MigrationVersion.Default()
-                       : new MigrationVersion(lastAppliedMigration.Version);
+                ? MigrationVersion.Default()
+                : new MigrationVersion(lastAppliedMigration.Version);
         }
 
         public DatabaseVersionBase StartMigration(Migration migration)
         {
-            var appliedMigration = Injector.GetInstance<IMigrationService>().CreateDatabaseVersion();//new DatabaseVersion(migration);
+            var appliedMigration =
+                Injector.GetInstance<IMigrationService>().CreateDatabaseVersion(); //new DatabaseVersion(migration);
             appliedMigration.SetValuesFrom(migration);
 
             appliedMigration.StartedOn = DateTime.Now;
-            this.runner.Cmd.InsertNonGeneric(appliedMigration);//Eğer sıkıntı çıkarsa service e taşı.
+            this.runner.Cmd.InsertNonGeneric(appliedMigration); //Eğer sıkıntı çıkarsa service e taşı.
             return appliedMigration;
         }
 
@@ -112,7 +121,7 @@
 
         public void FindOneAndReplace(DatabaseVersionBase appliedMigration)
         {
-            this.runner.Cmd.UpdateNonGeneric(appliedMigration);//Eğer sıkıntı çıkarsa service e taşı.
+            this.runner.Cmd.UpdateNonGeneric(appliedMigration); //Eğer sıkıntı çıkarsa service e taşı.
         }
     }
 }

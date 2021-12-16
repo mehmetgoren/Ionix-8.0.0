@@ -37,10 +37,5 @@
         [Precision(14, 2)] public decimal LineerScore { get; set; }
 
         public double LineerBiasScore { get; set; }
-
-        public string this_added_newly { get; set; }
-
-        [DbSchema(ColumnName = "This_Added_Nonnullable", DefaultValue = "0")]
-        public int this_added_nonnullable { get; set; }
     }
 }

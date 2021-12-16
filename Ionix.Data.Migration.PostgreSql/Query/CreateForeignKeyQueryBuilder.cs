@@ -1,8 +1,9 @@
-﻿namespace Ionix.Migration.PostgreSql
+﻿namespace Ionix.Data.Migration.PostgreSql
 {
     using System;
     using System.Text;
-    using Data;
+    using Data.Common;
+    using Common;
 
     internal sealed class CreateForeignKeyQueryBuilder : ISqlQueryProvider
     {
@@ -38,8 +39,10 @@
             string fkName = this.attr.Name;
             if (String.IsNullOrEmpty(fkName))
             {
-                StringBuilder sb = new StringBuilder("fk_").Append(this.tableName).Append('_').Append(this.attr.ReferenceTable).Append('_')
-                    .Append(this.attr.Columns.Trim().Replace(',', '_')).Append('_').Append(this.attr.ReferenceColumns.Trim().Replace(',', '_'));
+                StringBuilder sb = new StringBuilder("fk_").Append(this.tableName).Append('_')
+                    .Append(this.attr.ReferenceTable).Append('_')
+                    .Append(this.attr.Columns.Trim().Replace(',', '_')).Append('_')
+                    .Append(this.attr.ReferenceColumns.Trim().Replace(',', '_'));
 
                 if (sb.Length > pgMaxNameLinegth)
                     sb.Remove(pgMaxNameLinegth, sb.Length - pgMaxNameLinegth);

@@ -1,4 +1,4 @@
-﻿namespace Ionix.Utils.Collections
+﻿namespace Ionix.Data.Utils.Collections
 {
     using System;
     using System.Collections;
@@ -7,7 +7,7 @@
     using System.Linq.Expressions;
     using System.Linq;
     using System.Reflection;
-    using Ionix.Utils.Extensions;
+    using Extensions;
 
     public class IndexedEntityList<TEntity> : ICollection<TEntity>
     {
@@ -69,6 +69,7 @@
                     {
                         hash = hash * 23 + this.keys[j].GetHashCode();
                     }
+
                     return hash;
                 }
             }
@@ -83,6 +84,7 @@
         {
             return new Key(this.keys, entity);
         }
+
         public void Add(TEntity entity)
         {
             if (null != entity)
@@ -103,6 +105,7 @@
                 Key k = this.GetKey(entity);
                 return this.dic.ContainsKey(k);
             }
+
             return false;
         }
 
@@ -128,6 +131,7 @@
                 Key k = this.GetKey(entity);
                 return this.dic.Remove(k);
             }
+
             return false;
         }
 
@@ -138,6 +142,7 @@
                 Key k = new Key(keyValues);
                 return this.dic.Remove(k);
             }
+
             return false;
         }
 
@@ -165,6 +170,7 @@
                 this.dic.TryGetValue(k, out entity);
                 return entity;
             }
+
             return default(TEntity);
         }
 
@@ -190,6 +196,7 @@
                     return true;
                 }
             }
+
             return false;
         }
     }

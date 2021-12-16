@@ -1,6 +1,7 @@
 ﻿namespace Ionix.Data.SQLite
 {
     using System;
+    using Common;
 
     internal static class GlobalInternal
     {
@@ -8,7 +9,6 @@
 
         internal static readonly string BeginStatement = "BEGIN;" + Environment.NewLine;
         internal static readonly string EndStatement = Environment.NewLine + "END;";
-
     }
 
     internal sealed class ValueSetter : DbValueSetter
@@ -17,7 +17,6 @@
 
         private ValueSetter()
         {
-
         }
 
         public override char Prefix => GlobalInternal.Prefix;

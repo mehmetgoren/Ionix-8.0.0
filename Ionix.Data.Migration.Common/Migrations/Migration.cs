@@ -1,6 +1,6 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
-    using Data;
+    using Ionix.Data.Common;
 
     public abstract class Migration
     {
@@ -25,7 +25,8 @@
             SqlQuery query = this.GenerateQuery();
             if (null == query || query.IsEmpty())
             {
-                throw new MigrationException($"{this.GetType()}.{nameof(GenerateQuery)} shouldn't returns null or empty query.");
+                throw new MigrationException(
+                    $"{this.GetType()}.{nameof(GenerateQuery)} shouldn't returns null or empty query.");
             }
 
             cmd.Factory.DataAccess.ExecuteNonQuery(this.GenerateQuery());

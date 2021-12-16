@@ -1,6 +1,7 @@
 ﻿namespace Ionix.Data.SQLite
 {
     using Utils.Extensions;
+    using Common;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -8,7 +9,8 @@
     {
         public BatchCommandUpdate(IDbAccess dataAccess)
             : base(dataAccess)
-        { }
+        {
+        }
 
         public HashSet<string> UpdatedFields { get; set; }
 
@@ -16,7 +18,9 @@
         {
             return this.Execute<TEntity>(entityList, provider);
         }
-        Task<int> IBatchCommandUpdate.UpdateAsync<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider)
+
+        Task<int> IBatchCommandUpdate.UpdateAsync<TEntity>(IEnumerable<TEntity> entityList,
+            IEntityMetaDataProvider provider)
         {
             return this.ExecuteAsync<TEntity>(entityList, provider);
         }
@@ -45,6 +49,7 @@
 
             return batchQuery;
         }
+
         public override int Execute<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider)
         {
             if (entityList.IsNullOrEmpty())
@@ -54,7 +59,9 @@
 
             return base.DataAccess.ExecuteNonQuery(batchQuery);
         }
-        public override Task<int> ExecuteAsync<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider)
+
+        public override Task<int> ExecuteAsync<TEntity>(IEnumerable<TEntity> entityList,
+            IEntityMetaDataProvider provider)
         {
             if (entityList.IsNullOrEmpty())
                 return Task.FromResult(0);
@@ -69,7 +76,8 @@
     {
         public BatchCommandInsert(IDbAccess dataAccess)
             : base(dataAccess)
-        { }
+        {
+        }
 
         public HashSet<string> InsertFields { get; set; }
 
@@ -77,7 +85,9 @@
         {
             return this.Execute(entityList, provider);
         }
-        Task<int> IBatchCommandInsert.InsertAsync<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider)
+
+        Task<int> IBatchCommandInsert.InsertAsync<TEntity>(IEnumerable<TEntity> entityList,
+            IEntityMetaDataProvider provider)
         {
             return this.ExecuteAsync(entityList, provider);
         }
@@ -108,6 +118,7 @@
 
             return batchQuery;
         }
+
         public override int Execute<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider)
         {
             if (entityList.IsNullOrEmpty())
@@ -116,7 +127,9 @@
             SqlQuery batchQuery = this.CreateInsertQuery(entityList, provider);
             return base.DataAccess.ExecuteNonQuery(batchQuery);
         }
-        public override Task<int> ExecuteAsync<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider)
+
+        public override Task<int> ExecuteAsync<TEntity>(IEnumerable<TEntity> entityList,
+            IEntityMetaDataProvider provider)
         {
             if (entityList.IsNullOrEmpty())
                 return Task.FromResult(0);
@@ -130,7 +143,8 @@
     {
         public BatchCommandUpsert(IDbAccess dataAccess)
             : base(dataAccess)
-        { }
+        {
+        }
 
         public HashSet<string> UpdatedFields { get; set; }
 
@@ -140,7 +154,9 @@
         {
             return this.Execute(entityList, provider);
         }
-        Task<int> IBatchCommandUpsert.UpsertAsync<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider)
+
+        Task<int> IBatchCommandUpsert.UpsertAsync<TEntity>(IEnumerable<TEntity> entityList,
+            IEntityMetaDataProvider provider)
         {
             return this.ExecuteAsync(entityList, provider);
         }
@@ -153,6 +169,7 @@
 
             return upsertCommand;
         }
+
         public override int Execute<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider)
         {
             if (entityList.IsNullOrEmpty())
@@ -165,9 +182,12 @@
             {
                 sum += upsertCommand.Execute(entity, provider);
             }
+
             return sum;
         }
-        public override async Task<int> ExecuteAsync<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider)
+
+        public override async Task<int> ExecuteAsync<TEntity>(IEnumerable<TEntity> entityList,
+            IEntityMetaDataProvider provider)
         {
             if (entityList.IsNullOrEmpty())
                 return 0;
@@ -179,6 +199,7 @@
             {
                 sum += await upsertCommand.ExecuteAsync(entity, provider);
             }
+
             return sum;
         }
     }
@@ -188,19 +209,22 @@
     {
         public BatchCommandDelete(IDbAccess dataAccess)
             : base(dataAccess)
-        { }
+        {
+        }
 
         int IBatchCommandDelete.Delete<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider)
         {
             return this.Execute(entityList, provider);
         }
 
-        Task<int> IBatchCommandDelete.DeleteAsync<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider)
+        Task<int> IBatchCommandDelete.DeleteAsync<TEntity>(IEnumerable<TEntity> entityList,
+            IEntityMetaDataProvider provider)
         {
             return this.ExecuteAsync(entityList, provider);
         }
 
-        private SqlQuery CreateBatchDeleteQuery<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider)
+        private SqlQuery CreateBatchDeleteQuery<TEntity>(IEnumerable<TEntity> entityList,
+            IEntityMetaDataProvider provider)
         {
             IEntityMetaData metaData = provider.EnsureCreateEntityMetaData<TEntity>();
 
@@ -222,6 +246,7 @@
 
             return batchQuery;
         }
+
         public override int Execute<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider)
         {
             if (entityList.IsNullOrEmpty())
@@ -231,7 +256,8 @@
             return base.DataAccess.ExecuteNonQuery(batchQuery);
         }
 
-        public override Task<int> ExecuteAsync<TEntity>(IEnumerable<TEntity> entityList, IEntityMetaDataProvider provider)
+        public override Task<int> ExecuteAsync<TEntity>(IEnumerable<TEntity> entityList,
+            IEntityMetaDataProvider provider)
         {
             if (entityList.IsNullOrEmpty())
                 return Task.FromResult(0);

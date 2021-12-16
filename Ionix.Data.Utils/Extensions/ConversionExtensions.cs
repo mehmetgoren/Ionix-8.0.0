@@ -1,4 +1,4 @@
-﻿namespace Ionix.Utils.Extensions
+﻿namespace Ionix.Data.Utils.Extensions
 {
     using System;
 
@@ -15,6 +15,7 @@
             {
                 return (T)System.Convert.ChangeType(value, typeof(T));
             }
+
             return default(T);
         }
 
@@ -26,10 +27,14 @@
                 {
                     return Convert<T>(value);
                 }
-                catch { }
+                catch
+                {
+                }
             }
+
             return default(T);
         }
+
         public static TDest? ConvertSafely<TSource, TDest>(this TSource? value)
             where TSource : struct
             where TDest : struct
@@ -38,6 +43,7 @@
             {
                 return ConvertSafely<TDest>(value.Value);
             }
+
             return null;
         }
 
@@ -49,8 +55,11 @@
                 {
                     return System.Convert.ChangeType(value, type, null);
                 }
-                catch { }
+                catch
+                {
+                }
             }
+
             return null;
         }
 
@@ -63,6 +72,7 @@
                 if (stringValue.Length != 0)
                     return Convert<T>(value);
             }
+
             return null;
         }
 
@@ -75,6 +85,7 @@
                 if (stringValue.Length != 0)
                     return ConvertSafely<T>(value);
             }
+
             return null;
         }
 

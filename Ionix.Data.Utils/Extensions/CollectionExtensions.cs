@@ -1,6 +1,6 @@
-﻿namespace Ionix.Utils.Extensions
+﻿namespace Ionix.Data.Utils.Extensions
 {
-    using Ionix.Utils.Collections;
+    using Ionix.Data.Utils.Collections;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -15,6 +15,7 @@
                     if (obj.Equals(item))
                         return true;
             }
+
             return false;
         }
 
@@ -34,6 +35,7 @@
                     }
                 }
             }
+
             return true;
         }
 
@@ -58,6 +60,7 @@
                 else
                     return input.Take(pagesize);
             }
+
             return new List<T>();
         }
 

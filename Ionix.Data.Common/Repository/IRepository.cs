@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System;
     using System.Collections.Generic;
@@ -8,11 +8,13 @@
     {
         //Props
         ICommandAdapter Cmd { get; }
+
         IDbAccess DataAccess { get; }
         //
 
         //Evets
         event EventHandler<PreExecuteCommandEventArgs<TEntity>> PreExecuteCommand;
+
         event EventHandler<ExecuteCommandCompleteEventArgs<TEntity>> ExecuteCommandCompleted;
         //
 
@@ -30,6 +32,7 @@
         Task<TEntity> QuerySingleAsync(SqlQuery query);
 
         IList<TEntity> Query(SqlQuery query);
+
         Task<IList<TEntity>> QueryAsync(SqlQuery query);
         //
 
@@ -44,6 +47,7 @@
         Task<int> UpsertAsync(TEntity entity, string[] updatedFields, string[] insertFields);
 
         int Delete(TEntity entity);
+
         Task<int> DeleteAsync(TEntity entity);
         //
 
@@ -58,6 +62,7 @@
         Task<int> BatchUpsertAsync(IEnumerable<TEntity> entityList, string[] updatedFields, string[] insertFields);
 
         int BatchDelete(IEnumerable<TEntity> entityList);
+
         Task<int> BatchDeleteAsync(IEnumerable<TEntity> entityList);
         //
     }

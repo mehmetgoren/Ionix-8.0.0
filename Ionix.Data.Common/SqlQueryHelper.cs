@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using Utils.Extensions;
     using System;
@@ -11,7 +11,6 @@
         public KeySchemaNotFoundException()
             : base("Key Schema Not Found")
         {
-
         }
 
         public KeySchemaNotFoundException(string message) : base(message)
@@ -84,11 +83,14 @@
                 string parameterName = metaData.GetParameterName(keySchema, index);
                 list.Add(keySchema.Schema.ColumnName, parameterName, ConditionOperator.Equals, keyValues[j]);
             }
+
             return list.ToQuery();
         }
 
         //Upsert de Identity Parametre İçin Eklendi.
-        public static SqlQueryParameter EnsureHasParameter(SqlQuery query, string parameterName, PropertyMetaData property, object entity)//inset de bu parametre normalde eklenmez ama upsert de update where de eklendiği için bu yapı kullanılıyor.
+        public static SqlQueryParameter EnsureHasParameter(SqlQuery query, string parameterName,
+            PropertyMetaData property,
+            object entity) //inset de bu parametre normalde eklenmez ama upsert de update where de eklendiği için bu yapı kullanılıyor.
         {
             SqlQueryParameter identityParameter = query.Parameters.Find(parameterName);
             if (null == identityParameter)
@@ -98,15 +100,18 @@
 
                 query.Parameters.Add(identityParameter);
             }
+
             return identityParameter;
         }
 
-        public static void SetColumnValue(DbValueSetter setter, IEntityMetaData metaData, int index, SqlQuery query, PropertyMetaData pm, object entity)//Parametewnin eklenip eklenmeyeceği bilinmdeğinden prefix ve entity verilmek zorunda.
+        public static void SetColumnValue(DbValueSetter setter, IEntityMetaData metaData, int index, SqlQuery query,
+            PropertyMetaData pm,
+            object entity) //Parametewnin eklenip eklenmeyeceği bilinmdeğinden prefix ve entity verilmek zorunda.
         {
             setter.SetColumnValue(metaData, index, query, pm, entity);
         }
 
-        public static PropertyMetaData GetPrimaryKey(this IEntityMetaData metaData)//not unique keys.
+        public static PropertyMetaData GetPrimaryKey(this IEntityMetaData metaData) //not unique keys.
         {
             IList<PropertyMetaData> keys = metaData.OfKeys(true);
             if (keys.Count == 1)
@@ -114,7 +119,7 @@
                 return keys[0];
             }
 
-            return null;//means Multiple key,  unique keys not Primary Key.
+            return null; //means Multiple key,  unique keys not Primary Key.
         }
     }
 }

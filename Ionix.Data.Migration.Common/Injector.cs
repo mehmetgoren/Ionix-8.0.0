@@ -1,4 +1,4 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
     using System;
     using System.Collections.Concurrent;

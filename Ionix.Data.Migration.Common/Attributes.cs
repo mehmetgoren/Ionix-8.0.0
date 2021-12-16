@@ -1,4 +1,4 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
     using System;
     using System.Collections.Generic;
@@ -20,7 +20,6 @@
     {
         public TableIndexAttribute()
         {
-
         }
 
         public TableIndexAttribute(params string[] fields)
@@ -41,7 +40,6 @@
     {
         public TableForeignKeyAttribute()
         {
-
         }
 
         public TableForeignKeyAttribute(string columns, string referenceTable, string referenceColumns)
@@ -73,7 +71,6 @@
 
         public PrecisionAttribute()
         {
-
         }
 
         public PrecisionAttribute(int length, int precision)

@@ -1,4 +1,4 @@
-﻿namespace Ionix.Utils
+﻿namespace Ionix.Data.Utils
 {
     using System;
 

@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using Utils.Extensions;
     using System.Collections.Generic;
@@ -15,18 +15,34 @@
 
     public abstract class FluentPagingBase : IFluentPaging
     {
-        private int page;// pagingCurrentPage
-        private int _take;// pagingItemsPerPage
-        protected int take { get { return this._take; } }
+        private int page; // pagingCurrentPage
+        private int _take; // pagingItemsPerPage
+
+        protected int take
+        {
+            get { return this._take; }
+        }
 
         private string _orderBy;
-        protected string orderBy { get { return this._orderBy; } }
+
+        protected string orderBy
+        {
+            get { return this._orderBy; }
+        }
 
         private string _from;
-        protected string from { get { return this._from; } }
+
+        protected string from
+        {
+            get { return this._from; }
+        }
 
         private readonly HashSet<string> _select;
-        protected HashSet<string> select { get { return this._select; } }
+
+        protected HashSet<string> select
+        {
+            get { return this._select; }
+        }
 
         internal FluentPagingBase()
         {
@@ -52,11 +68,13 @@
             this._orderBy = column;
             return this;
         }
+
         public IFluentPaging Page(int page)
         {
             this.page = page;
             return this;
         }
+
         public IFluentPaging Take(int take)
         {
             this._take = take;
@@ -73,7 +91,6 @@
         {
             return (this.page * this._take);
         }
-
 
 
         public abstract SqlQuery ToQuery();

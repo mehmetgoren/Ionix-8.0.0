@@ -1,4 +1,4 @@
-﻿namespace Ionix.Utils
+﻿namespace Ionix.Data.Utils
 {
     using System;
 
@@ -20,6 +20,7 @@
         private bool init;
         private T value;
         private static readonly object syncRoot = new object();
+
         public T Value
         {
             get
@@ -28,11 +29,11 @@
                 {
                     if (!this.init)
                     {
-
                         this.value = this.func();
                         this.init = true;
                     }
                 }
+
                 return this.value;
             }
         }

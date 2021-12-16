@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System;
     using System.Collections.Generic;
@@ -24,6 +24,7 @@
                     table.Rows.Add(row);
                 }
             }
+
             return table;
         }
 
@@ -43,6 +44,7 @@
                     SchemaInfo schema = prop.Schema;
                     ret.Columns.Add(schema.ColumnName, schema.DataType);
                 }
+
                 if (null != entityList)
                 {
                     foreach (TEntity item in entityList)
@@ -54,6 +56,7 @@
                     }
                 }
             }
+
             return ret;
         }
     }

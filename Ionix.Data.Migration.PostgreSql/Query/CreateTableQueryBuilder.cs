@@ -1,9 +1,11 @@
-﻿namespace Ionix.Migration.PostgreSql
+﻿namespace Ionix.Data.Migration.PostgreSql
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Data;
+    using Utils;
+    using Data.Common;
+    using Common;
 
     internal sealed class CreateTableQueryBuilder : ISqlQueryProvider
     {
@@ -46,7 +48,7 @@
             }
             else
             {
-                q.Text.Remove(q.Text.Length - 3, 3);
+                q.Text.Remove(q.Text.Length - 2, 2);
             }
             q.Text.AppendLine();
             if (!this.OIDS)

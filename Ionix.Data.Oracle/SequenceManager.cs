@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Text;
+    using Ionix.Data.Common;
 
     internal static class SequenceManager
     {
@@ -12,11 +13,12 @@
         private static readonly Dictionary<string, string> dic = new Dictionary<string, string>(8);
 
         private static readonly object SyncRoot = new object();
+
         internal static string GetSequenceName(IDbAccess dataAccess, string tableName, string pkColumn)
         {
             lock (SyncRoot)
             {
-                tableName = tableName.ToUpper(EnCulture);//Oracle Büyük Harf istiyor.
+                tableName = tableName.ToUpper(EnCulture); //Oracle Büyük Harf istiyor.
 
                 string sequenceName;
                 if (!dic.TryGetValue(tableName, out sequenceName))
@@ -30,7 +32,8 @@
             }
         }
 
-        private static string GetSequenceName(IDbAccess dataAccess, string tableName, string pkColumnName, bool checkSequence)
+        private static string GetSequenceName(IDbAccess dataAccess, string tableName, string pkColumnName,
+            bool checkSequence)
         {
             if (dataAccess == null)
                 throw new ArgumentNullException(nameof(dataAccess));
@@ -84,6 +87,7 @@
                         text.Append(" USER_SEQUENCES T WHERE");
                         query.Parameters.Add("SEQUENCE_NAME", sequenceName);
                     }
+
                     text.Append(" T.SEQUENCE_NAME = :SEQUENCE_NAME");
                     ret = (Decimal)dataAccess.ExecuteScalar(query);
                     if (ret == 0M)
@@ -116,7 +120,8 @@
                         text.Append("SELECT T.LAST_NUMBER FROM");
                         if (withUser)
                         {
-                            text.Append(" ALL_SEQUENCES T WHERE T.SEQUENCE_OWNER = :SEQUENCE_OWNER AND T.SEQUENCE_NAME = :SEQUENCE_NAME");
+                            text.Append(
+                                " ALL_SEQUENCES T WHERE T.SEQUENCE_OWNER = :SEQUENCE_OWNER AND T.SEQUENCE_NAME = :SEQUENCE_NAME");
                             query.Parameters.Add("SEQUENCE_OWNER", arr[0]);
                             query.Parameters.Add("SEQUENCE_NAME", "SQE_" + arr[1]);
                         }
@@ -125,6 +130,7 @@
                             text.Append(" USER_SEQUENCES T WHERE T.SEQUENCE_NAME = :SEQUENCE_NAME");
                             query.Parameters.Add("SEQUENCE_NAME", sequenceName);
                         }
+
                         curVal = (Decimal)dataAccess.ExecuteScalar(query);
                         if (minVal > curVal)
                         {
@@ -153,6 +159,7 @@
                         $"An error occurred while creating a sequence for '{tableName}' Oracle table. Error detail: '{ex.Message}'");
                 }
             }
+
             return sequenceName;
         }
     }

@@ -2,13 +2,15 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations.Schema;
-    using Data;
+    using Data.Common;
+    using Common;
 
     [MigrationVersion(Migration000.VersionNo)]
     [Table("DatabaseVersion")]
     public class DatabaseVersion : DatabaseVersionBase
     {
         private MigrationVersion _version;
+
         [DbSchema(IsKey = true, MaxLength = 5)]
         public override string Version
         {
@@ -16,8 +18,7 @@
             set => this._version = value;
         }
 
-        [DbSchema(MaxLength = 50)]
-        public override string Description { get; set; }
+        [DbSchema(MaxLength = 50)] public override string Description { get; set; }
 
         public DatabaseVersion()
         {

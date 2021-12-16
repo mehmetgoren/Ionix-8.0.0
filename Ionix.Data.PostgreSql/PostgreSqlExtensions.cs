@@ -1,6 +1,7 @@
 ﻿namespace Ionix.Data.PostgreSql
 {
     using Utils;
+    using Common;
     using System;
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
@@ -29,8 +30,10 @@
                         sql = Regex.Replace(sql, pattern, replace);
                     }
                 }
+
                 return sql;
             }
+
             return String.Empty;
         }
 
@@ -43,9 +46,9 @@
                 return "NULL";
 
             else if (parameterValueType == CachedTypes.String
-                || parameterValueType == CachedTypes.Guid
-                || parameterValueType == CachedTypes.Char
-                || parameterValueType == CachedTypes.Nullable_Char)
+                     || parameterValueType == CachedTypes.Guid
+                     || parameterValueType == CachedTypes.Char
+                     || parameterValueType == CachedTypes.Nullable_Char)
                 return '\'' + parameterValue.ToString() + '\'';
             else if (parameterValueType == CachedTypes.DateTime || parameterValueType == CachedTypes.Nullable_DateTime)
             {

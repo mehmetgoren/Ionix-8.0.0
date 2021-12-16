@@ -1,6 +1,7 @@
 ﻿namespace Ionix.Data.Migration.SQLite
 {
     using System;
+    using Common;
 
     public class MigrationInitializer : MigrationInitializerBase
     {
@@ -8,6 +9,7 @@
         {
             this.CheckTransactionalDbAccess = false;
         }
+
         public MigrationInitializer(Action backup)
             : base(backup)
         {

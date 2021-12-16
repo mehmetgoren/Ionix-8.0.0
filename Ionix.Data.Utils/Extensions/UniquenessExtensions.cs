@@ -1,4 +1,4 @@
-﻿namespace Ionix.Utils.Extensions
+﻿namespace Ionix.Data.Utils.Extensions
 {
     using System;
     using System.Threading;
@@ -6,6 +6,7 @@
     public static class UniquenessExtensions
     {
         private static readonly object syncRoot = new object();
+
         public static string GenerateUniqueName()
         {
             try
@@ -17,6 +18,7 @@
                 {
                     i *= (((int)b) + 1);
                 }
+
                 return string.Format("{0:x}", i - DateTime.Now.Ticks);
             }
             finally
@@ -26,6 +28,7 @@
         }
 
         private static readonly object syncRoot2 = new object();
+
         public static int GenerateUniqueHashCode(params object[] args)
         {
             try
@@ -53,6 +56,5 @@
                 Monitor.Exit(syncRoot2);
             }
         }
-
     }
 }

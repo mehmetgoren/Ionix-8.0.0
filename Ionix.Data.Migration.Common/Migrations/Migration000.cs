@@ -1,8 +1,8 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
     using System;
     using System.Collections.Generic;
-    using Data;
+    using Ionix.Data.Common;
 
     public sealed class Migration000 : MigrationAuto
     {

@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System;
     using System.Data;
@@ -16,9 +16,11 @@
             this.parameters = new SqlQueryParameterList();
             this.CmdType = CommandType.Text;
         }
+
         public SqlQuery()
             : this(null)
-        { }
+        {
+        }
 
         public StringBuilder Text => this.text;
 
@@ -45,8 +47,10 @@
                 this.text.Append(queryInfo.text);
                 this.parameters.AddRange(queryInfo.parameters);
             }
+
             return this;
         }
+
         public SqlQuery Clear()
         {
             this.text.Length = 0;
@@ -70,6 +74,7 @@
 
             return this;
         }
+
         public SqlQuery Sql(string sql)
         {
             if (!String.IsNullOrEmpty(sql))
@@ -79,6 +84,7 @@
 
             return this;
         }
+
         public SqlQuery Parameter(string parameterName, object value)
         {
             if (!String.IsNullOrEmpty(parameterName))

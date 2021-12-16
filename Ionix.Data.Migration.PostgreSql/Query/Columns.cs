@@ -1,9 +1,10 @@
-﻿namespace Ionix.Migration.PostgreSql
+﻿namespace Ionix.Data.Migration.PostgreSql
 {
     using System;
     using System.Reflection;
     using System.Text;
-    using Data;
+    using Data.Common;
+    using Common;
 
     internal static class Columns
     {
@@ -75,8 +76,10 @@
                         {
                             sb.Append(',').Append(this.Precision);
                         }
+
                         sb.Append(")");
                     }
+
                     return sb.ToString();
                 }
             }
@@ -198,7 +201,6 @@
             {
                 this.DataType = dbType ?? throw new ArgumentNullException(nameof(dbType));
             }
-
         }
     }
 }

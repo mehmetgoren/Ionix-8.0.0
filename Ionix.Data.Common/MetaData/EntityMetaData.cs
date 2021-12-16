@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using Utils;
     using System;
@@ -25,7 +25,9 @@
         //Cache lenen nesnelerde schema info ve parametre isminin değişmesi sıkıntı çıkartıyor(ki command nesneleri bu edğişkikliği yapıyor.)
         public PropertyMetaData Copy()
         {
-            PropertyMetaData copy = new PropertyMetaData(this.Schema.Copy(), this.Property);//property zaten readonly bir object. tüm prop lar readonly.
+            PropertyMetaData
+                copy = new PropertyMetaData(this.Schema.Copy(),
+                    this.Property); //property zaten readonly bir object. tüm prop lar readonly.
             //ParameterName kopyalanmamalı.
             return copy;
         }
@@ -36,10 +38,12 @@
                 return this.Schema.Equals(other.Schema);
             return false;
         }
+
         public override bool Equals(object obj)
         {
             return this.Equals(obj as PropertyMetaData);
         }
+
         public override int GetHashCode()
         {
             return this.Schema.GetHashCode();
@@ -66,10 +70,10 @@
             this.EntityType = entityType;
             this.TableName = tableName;
         }
+
         public EntityMetaData(Type entityType)
             : this(entityType, AttributeExtension.GetTableName(entityType))
         {
-
         }
 
         internal void Add(SchemaInfo schema, PropertyInfo property)
@@ -93,7 +97,9 @@
 
         public IEntityMetaData Copy()
         {
-            EntityMetaData copy = new EntityMetaData(this.EntityType, this.TableName);//Type ReadOnly bir object dir. String de fixed char* kullanılmıyorsa immutable bir nesnedir.
+            EntityMetaData
+                copy = new EntityMetaData(this.EntityType,
+                    this.TableName); //Type ReadOnly bir object dir. String de fixed char* kullanılmıyorsa immutable bir nesnedir.
             foreach (KeyValuePair<string, PropertyMetaData> orginal in this.dic)
             {
                 copy.dic.Add(orginal.Key, orginal.Value.Copy());

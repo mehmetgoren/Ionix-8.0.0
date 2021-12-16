@@ -1,18 +1,23 @@
-﻿namespace Ionix.Migration.PostgreSql
+﻿namespace Ionix.Data.Migration.PostgreSql
 {
-    using Ionix.Utils.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-    using Data;
+    using Utils.Extensions;
+    using Data.Common;
+    using Common;
 
     public class MigrationSqlQueryBuilder : IMigrationSqlQueryBuilder
     {
         public static readonly MigrationSqlQueryBuilder Instance = new MigrationSqlQueryBuilder();
-        private MigrationSqlQueryBuilder() { }
+
+        private MigrationSqlQueryBuilder()
+        {
+        }
 
         //tableattribute check edilip gönderiliyor types' a
-        public virtual SqlQuery CreateTable(IEnumerable<Type> types, DbSchemaMetaDataProvider provider, IColumnDbTypeResolver typeResolver)
+        public virtual SqlQuery CreateTable(IEnumerable<Type> types, DbSchemaMetaDataProvider provider,
+            IColumnDbTypeResolver typeResolver)
         {
             SqlQuery query = new SqlQuery();
             if (!types.IsNullOrEmpty() && null != typeResolver)
@@ -44,15 +49,18 @@
                     }
 
                     //fks
-                    IEnumerable<TableForeignKeyAttribute> fkAttrs = type.GetCustomAttributes<TableForeignKeyAttribute>();
+                    IEnumerable<TableForeignKeyAttribute>
+                        fkAttrs = type.GetCustomAttributes<TableForeignKeyAttribute>();
                     if (!fkAttrs.IsNullOrEmpty())
                     {
                         foreach (TableForeignKeyAttribute fkAttr in fkAttrs)
                         {
-                            CreateForeignKeyQueryBuilder cfk = new CreateForeignKeyQueryBuilder(metaData.TableName, fkAttr);
+                            CreateForeignKeyQueryBuilder cfk =
+                                new CreateForeignKeyQueryBuilder(metaData.TableName, fkAttr);
                             query.Combine(cfk.ToQuery());
                             query.Text.AppendLine();
                         }
+
                         query.Text.AppendLine();
                     }
 

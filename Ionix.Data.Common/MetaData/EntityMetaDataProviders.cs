@@ -1,15 +1,17 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System;
     using System.Reflection;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.ComponentModel.DataAnnotations;
-    using Ionix.Utils.Extensions;
+    using Ionix.Data.Utils.Extensions;
 
     public abstract class EntityMetaDataProviderBase : IEntityMetaDataProvider
     {
-        private static readonly IDictionary<Type, Dictionary<Type, IEntityMetaData>> _cache = new Dictionary<Type, Dictionary<Type, IEntityMetaData>>();//new ConcurrentDictionary<Type, IEntityMetaData>();// new Dictionary<Type, IEntityMetaData>(); 
+        private static readonly IDictionary<Type, Dictionary<Type, IEntityMetaData>> _cache =
+            new Dictionary<Type,
+                Dictionary<Type, IEntityMetaData>>(); //new ConcurrentDictionary<Type, IEntityMetaData>();// new Dictionary<Type, IEntityMetaData>(); 
 
         protected virtual bool IsMapped(PropertyInfo pi)
         {
@@ -21,8 +23,12 @@
 
             return ReflectionExtensions.IsPrimitiveType(pi.PropertyType);
         }
+
         protected abstract void SetExtendedSchema(SchemaInfo schema, PropertyInfo pi);
-        protected virtual void SetExtendedMetaData(EntityMetaData metaData) { }
+
+        protected virtual void SetExtendedMetaData(EntityMetaData metaData)
+        {
+        }
 
         private SchemaInfo FromPropertyInfo(PropertyInfo pi)
         {
@@ -33,7 +39,8 @@
 
             bool nullableTypeDetected = propertyType.IsNullableType();
 
-            SchemaInfo schema = new SchemaInfo(pi.Name, nullableTypeDetected ? propertyType.GetTypeInfo().GetGenericArguments()[0] : propertyType);
+            SchemaInfo schema = new SchemaInfo(pi.Name,
+                nullableTypeDetected ? propertyType.GetTypeInfo().GetGenericArguments()[0] : propertyType);
 
             if (nullableTypeDetected)
                 schema.IsNullable = true;
@@ -56,6 +63,7 @@
         }
 
         private static readonly object syncRoot = new object();
+
         public IEntityMetaData CreateEntityMetaData(Type entityType)
         {
             lock (syncRoot)
@@ -73,14 +81,16 @@
                 {
                     int order = 0;
                     EntityMetaData temp = new EntityMetaData(entityType);
-                    foreach (PropertyInfo pi in entityType.GetTypeInfo().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                    foreach (PropertyInfo pi in entityType.GetTypeInfo()
+                                 .GetProperties(BindingFlags.Public | BindingFlags.Instance))
                     {
                         ++order;
                         SchemaInfo schema = this.FromPropertyInfo(pi);
                         if (null == schema) //NotMapped.
                             continue;
 
-                        schema.Order = order; //Order parametere isimlarine ardışıklık için çok önemli. Oyüzden base de atamasını yaptık.
+                        schema.Order =
+                            order; //Order parametere isimlarine ardışıklık için çok önemli. Oyüzden base de atamasını yaptık.
                         schema.Lock();
                         temp.Add(schema, pi);
                     }
@@ -112,6 +122,7 @@
             {
                 schema.IsNullable = false;
             }
+
             var sla = pi.GetCustomAttribute<StringLengthAttribute>();
             if (null != sla)
             {
@@ -140,10 +151,12 @@
 
                 if (schema.IsKey)
                     schema.IsNullable = false;
-                else if (att.isNullable.IsDirty)//Ensure it is changes by user. Because the metadataprovider set the value properly.
+                else if
+                    (att.isNullable
+                     .IsDirty) //Ensure it is changes by user. Because the metadataprovider set the value properly.
                     schema.IsNullable = att.IsNullable;
 
-                if (att.readOnly.IsDirty)//Ensure it is changes by user.
+                if (att.readOnly.IsDirty) //Ensure it is changes by user.
                     schema.ReadOnly = att.ReadOnly;
 
                 schema.SqlValueType = att.SqlValueType;

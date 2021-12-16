@@ -1,6 +1,7 @@
 ﻿namespace Ionix.Data.Oracle
 {
     using System;
+    using Ionix.Data.Common;
 
     internal static class GlobalInternal
     {
@@ -8,7 +9,6 @@
 
         internal static readonly string OracleBeginStatement = "BEGIN" + Environment.NewLine;
         internal static readonly string OracleEndStatement = Environment.NewLine + "END;";
-
     }
 
     internal sealed class ValueSetter : DbValueSetter
@@ -17,7 +17,6 @@
 
         private ValueSetter()
         {
-
         }
 
         public override char Prefix => GlobalInternal.Prefix;

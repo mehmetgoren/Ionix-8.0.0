@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using Utils;
     using Utils.Extensions;
@@ -12,11 +12,13 @@
     {
         private static readonly CultureInfo NumericCulture = new CultureInfo("en-US");
 
-        private static readonly HashSet<Type> WithQuotes = new HashSet<Type>() { CachedTypes.String, CachedTypes.DateTime, CachedTypes.Guid };
+        private static readonly HashSet<Type> WithQuotes = new HashSet<Type>()
+            { CachedTypes.String, CachedTypes.DateTime, CachedTypes.Guid };
 
         public abstract char Prefix { get; }
 
-        public virtual void SetColumnValue(IEntityMetaData metaData, int index, SqlQuery query, PropertyMetaData pm, object entity)//Parametewnin eklenip eklenmeyeceği bilinmdeğinden prefix ve entity verilmek zorunda.
+        public virtual void SetColumnValue(IEntityMetaData metaData, int index, SqlQuery query, PropertyMetaData pm,
+            object entity) //Parametewnin eklenip eklenmeyeceği bilinmdeğinden prefix ve entity verilmek zorunda.
         {
             SchemaInfo schema = pm.Schema;
             PropertyInfo pi = pm.Property;
@@ -26,7 +28,7 @@
             if (schema.DefaultValue.Length != 0)
             {
                 object defaultValue = ReflectionExtensions.GetDefault(pi.PropertyType);
-                if (Object.Equals(defaultValue, parValue))//Eğer Property Değeri Default Haldeyse yazdır Bunu
+                if (Object.Equals(defaultValue, parValue)) //Eğer Property Değeri Default Haldeyse yazdır Bunu
                 {
                     text.Append(schema.DefaultValue);
                     return;
@@ -49,7 +51,8 @@
                     string textValue = null;
                     if (null != parValue)
                     {
-                        Type dataType = pm.Schema.DataType;//Neden Schema.DataType çünkü pi.PropertyType nullable olabalir.
+                        Type dataType =
+                            pm.Schema.DataType; //Neden Schema.DataType çünkü pi.PropertyType nullable olabalir.
                         if (WithQuotes.Contains(dataType))
                         {
                             textValue = "'" + parValue + "'";
@@ -60,12 +63,12 @@
                             textValue = null != f ? f.ToString(null, NumericCulture) : parValue.ToString();
                         }
                     }
+
                     text.Append(textValue);
                     break;
                 default:
                     throw new NotSupportedException(schema.SqlValueType.ToString());
             }
         }
-
     }
 }

@@ -1,29 +1,31 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
-    using Ionix.Utils;
-    using Ionix.Utils.Extensions;
+    using Ionix.Data.Utils;
+    using Ionix.Data.Utils.Extensions;
     using System;
     using System.ComponentModel.DataAnnotations;
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public sealed class DbSchemaAttribute : ValidationAttribute
     {
-        public string ColumnName { get; set; }//Proprty ismi kolon ismiyle farklılık gösteriyor mu diye.
+        public string ColumnName { get; set; } //Proprty ismi kolon ismiyle farklılık gösteriyor mu diye.
 
         public bool IsKey { get; set; }
         public StoreGeneratedPattern DatabaseGeneratedOption { get; set; }
 
         internal Track<bool> isNullable = new Track<bool>(true);
+
         public bool IsNullable
         {
             get => this.isNullable.Value;
             set => this.isNullable.Value = value;
         }
 
-        public int MaxLength { get; set; }//UI Binding için.
+        public int MaxLength { get; set; } //UI Binding için.
         public string DefaultValue { get; set; }
 
         internal Track<bool> readOnly;
+
         public bool ReadOnly
         {
             get => this.readOnly.Value;
@@ -35,11 +37,12 @@
         public override bool IsValid(object value)
         {
             bool isValueNull = value.IsNull();
-            if (!this.IsNullable && isValueNull)//required
+            if (!this.IsNullable && isValueNull) //required
             {
                 this.ErrorMessage = "this field is required";
                 return false;
             }
+
             if (!isValueNull)
             {
                 int maxLength = this.MaxLength;

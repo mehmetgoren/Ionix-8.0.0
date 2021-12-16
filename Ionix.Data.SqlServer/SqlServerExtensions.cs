@@ -1,10 +1,11 @@
 ﻿namespace Ionix.Data.SqlServer
 {
     using Utils;
+    using Common;
     using System;
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
-    using Ionix.Utils.Extensions;
+    using Utils.Extensions;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
@@ -33,8 +34,10 @@
                         sql = Regex.Replace(sql, pattern, replace);
                     }
                 }
+
                 return sql;
             }
+
             return String.Empty;
         }
 
@@ -47,9 +50,9 @@
                 return "NULL";
 
             else if (parameterValueType == CachedTypes.String
-                || parameterValueType == CachedTypes.Guid
-                || parameterValueType == CachedTypes.Char
-                || parameterValueType == CachedTypes.Nullable_Char)
+                     || parameterValueType == CachedTypes.Guid
+                     || parameterValueType == CachedTypes.Char
+                     || parameterValueType == CachedTypes.Nullable_Char)
                 return '\'' + parameterValue.ToString() + '\'';
             else if (parameterValueType == CachedTypes.DateTime || parameterValueType == CachedTypes.Nullable_DateTime)
             {
@@ -80,8 +83,9 @@
             return propCount;
         }
 
-        private static void BatchOperationLimit2100<T>(IEnumerable<T> entities, int propCount, ref int affectedCount, Expression<Func<T, object>>[] fields
-            , Func<IEnumerable<T>, Expression<Func<T, object>>[],  int> fn)
+        private static void BatchOperationLimit2100<T>(IEnumerable<T> entities, int propCount, ref int affectedCount,
+            Expression<Func<T, object>>[] fields
+            , Func<IEnumerable<T>, Expression<Func<T, object>>[], int> fn)
         {
             int limit = MaxAllowedParameterCount / propCount;
             int entityCount = entities.Count();
@@ -99,7 +103,8 @@
             }
         }
 
-        private static async Task BatchOperationLimit2100Async<T>(IEnumerable<T> entities, int propCount, Expression<Func<T, object>>[] fields
+        private static async Task BatchOperationLimit2100Async<T>(IEnumerable<T> entities, int propCount,
+            Expression<Func<T, object>>[] fields
             , Func<IEnumerable<T>, Expression<Func<T, object>>[], Task<int>> fnAsync)
         {
             int limit = MaxAllowedParameterCount / propCount;
@@ -110,7 +115,7 @@
             else
             {
                 List<T> entityList = entities.ToList();
-                List<T> sublist = entityList.GetRange(0, limit); 
+                List<T> sublist = entityList.GetRange(0, limit);
                 await fnAsync(sublist, fields);
 
                 entityList.RemoveRange(0, limit);
@@ -118,7 +123,8 @@
             }
         }
 
-        public static int BatchInsertLimit2100<T>(this ICommandAdapter cmd, IEnumerable<T> entities, params Expression<Func<T, object>>[] insertFields)
+        public static int BatchInsertLimit2100<T>(this ICommandAdapter cmd, IEnumerable<T> entities,
+            params Expression<Func<T, object>>[] insertFields)
         {
             if (null == cmd || entities.IsNullOrEmpty())
                 return 0;
@@ -133,7 +139,8 @@
             return affectedCount;
         }
 
-        public static int BatchUpdateLimit2100<T>(this ICommandAdapter cmd, IEnumerable<T> entities, params Expression<Func<T, object>>[] updatedFields)
+        public static int BatchUpdateLimit2100<T>(this ICommandAdapter cmd, IEnumerable<T> entities,
+            params Expression<Func<T, object>>[] updatedFields)
         {
             if (null == cmd || entities.IsNullOrEmpty())
                 return 0;
@@ -148,7 +155,8 @@
             return affectedCount;
         }
 
-        public static int BatchUpsertLimit2100<T>(this ICommandAdapter cmd, IEnumerable<T> entities, params Expression<Func<T, object>>[] updatedFields)
+        public static int BatchUpsertLimit2100<T>(this ICommandAdapter cmd, IEnumerable<T> entities,
+            params Expression<Func<T, object>>[] updatedFields)
         {
             if (null == cmd || entities.IsNullOrEmpty())
                 return 0;
@@ -163,7 +171,8 @@
             return affectedCount;
         }
 
-        public static async Task BatchInsertLimit2100Async<T>(this ICommandAdapter cmd, IEnumerable<T> entities, params Expression<Func<T, object>>[] insertFields)
+        public static async Task BatchInsertLimit2100Async<T>(this ICommandAdapter cmd, IEnumerable<T> entities,
+            params Expression<Func<T, object>>[] insertFields)
         {
             if (null == cmd || entities.IsNullOrEmpty())
                 return;
@@ -175,7 +184,8 @@
             await BatchOperationLimit2100Async(entities, propCount, insertFields, cmd.BatchInsertAsync);
         }
 
-        public static async Task BatchUpdateLimit2100Async<T>(this ICommandAdapter cmd, IEnumerable<T> entities, params Expression<Func<T, object>>[] insertFields)
+        public static async Task BatchUpdateLimit2100Async<T>(this ICommandAdapter cmd, IEnumerable<T> entities,
+            params Expression<Func<T, object>>[] insertFields)
         {
             if (null == cmd || entities.IsNullOrEmpty())
                 return;
@@ -187,7 +197,8 @@
             await BatchOperationLimit2100Async(entities, propCount, insertFields, cmd.BatchUpdateAsync);
         }
 
-        public static async Task BatchUpsertLimit2100Async<T>(this ICommandAdapter cmd, IEnumerable<T> entities, params Expression<Func<T, object>>[] insertFields)
+        public static async Task BatchUpsertLimit2100Async<T>(this ICommandAdapter cmd, IEnumerable<T> entities,
+            params Expression<Func<T, object>>[] insertFields)
         {
             if (null == cmd || entities.IsNullOrEmpty())
                 return;

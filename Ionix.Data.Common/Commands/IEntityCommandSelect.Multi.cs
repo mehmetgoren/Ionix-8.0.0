@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System;
     using System.Collections.Generic;
@@ -15,7 +15,8 @@
             for (int j = 0; j < types.Length; ++j)
             {
                 Type type = types[j];
-                arr[j] = new Tuple<object, IEntityMetaData>(Activator.CreateInstance(type), provider.CreateEntityMetaData(type));
+                arr[j] = new Tuple<object, IEntityMetaData>(Activator.CreateInstance(type),
+                    provider.CreateEntityMetaData(type));
             }
 
             int drIndex = 0;
@@ -37,8 +38,10 @@
                             throw new InvalidOperationException($"MapBy.Sequence is not ordered correctly.", ex);
                         }
                     }
+
                     ++drIndex;
                 }
+
                 ret[j] = entity;
             }
 
@@ -54,7 +57,9 @@
             if (types.IsNullOrEmpty())
                 throw new ArgumentNullException(nameof(types));
         }
-        protected internal virtual object[] QueryTemplateSingle(IEntityMetaDataProvider provider, SqlQuery query, params Type[] types)
+
+        protected internal virtual object[] QueryTemplateSingle(IEntityMetaDataProvider provider, SqlQuery query,
+            params Type[] types)
         {
             this.CheckParams(provider, query, types);
 
@@ -76,7 +81,8 @@
             return null;
         }
 
-        protected internal virtual IList<object[]> QueryTemplate(IEntityMetaDataProvider provider, SqlQuery query, params Type[] types)
+        protected internal virtual IList<object[]> QueryTemplate(IEntityMetaDataProvider provider, SqlQuery query,
+            params Type[] types)
         {
             this.CheckParams(provider, query, types);
 
@@ -107,54 +113,77 @@
             {
                 return ((TEntity1)result[0], (TEntity2)result[1]);
             }
+
             return default((TEntity1, TEntity2));
         }
-        public (TEntity1, TEntity2, TEntity3) QuerySingle<TEntity1, TEntity2, TEntity3>(IEntityMetaDataProvider provider, SqlQuery query)
+
+        public (TEntity1, TEntity2, TEntity3) QuerySingle<TEntity1, TEntity2, TEntity3>(
+            IEntityMetaDataProvider provider, SqlQuery query)
         {
-            var result = this.QueryTemplateSingle(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3));
+            var result =
+                this.QueryTemplateSingle(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3));
             if (null != result)
             {
                 return ((TEntity1)result[0], (TEntity2)result[1], (TEntity3)result[2]);
             }
+
             return default((TEntity1, TEntity2, TEntity3));
         }
-        public (TEntity1, TEntity2, TEntity3, TEntity4) QuerySingle<TEntity1, TEntity2, TEntity3, TEntity4>(IEntityMetaDataProvider provider, SqlQuery query)
+
+        public (TEntity1, TEntity2, TEntity3, TEntity4) QuerySingle<TEntity1, TEntity2, TEntity3, TEntity4>(
+            IEntityMetaDataProvider provider, SqlQuery query)
         {
-            var result = this.QueryTemplateSingle(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3), typeof(TEntity4));
+            var result = this.QueryTemplateSingle(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3),
+                typeof(TEntity4));
             if (null != result)
             {
                 return ((TEntity1)result[0], (TEntity2)result[1], (TEntity3)result[2], (TEntity4)result[3]);
             }
+
             return default((TEntity1, TEntity2, TEntity3, TEntity4));
         }
-        public (TEntity1, TEntity2, TEntity3, TEntity4, TEntity5) QuerySingle<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5>(IEntityMetaDataProvider provider, SqlQuery query)
+
+        public (TEntity1, TEntity2, TEntity3, TEntity4, TEntity5) QuerySingle<TEntity1, TEntity2, TEntity3, TEntity4,
+            TEntity5>(IEntityMetaDataProvider provider, SqlQuery query)
         {
-            var result = this.QueryTemplateSingle(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3), typeof(TEntity4), typeof(TEntity5));
+            var result = this.QueryTemplateSingle(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3),
+                typeof(TEntity4), typeof(TEntity5));
             if (null != result)
             {
-                return ((TEntity1)result[0], (TEntity2)result[1], (TEntity3)result[2], (TEntity4)result[3], (TEntity5)result[4]);
+                return ((TEntity1)result[0], (TEntity2)result[1], (TEntity3)result[2], (TEntity4)result[3],
+                    (TEntity5)result[4]);
             }
+
             return default((TEntity1, TEntity2, TEntity3, TEntity4, TEntity5));
         }
-        public (TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6) QuerySingle<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6>(IEntityMetaDataProvider provider, SqlQuery query)
+
+        public (TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6) QuerySingle<TEntity1, TEntity2, TEntity3,
+            TEntity4, TEntity5, TEntity6>(IEntityMetaDataProvider provider, SqlQuery query)
         {
-            var result = this.QueryTemplateSingle(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3), typeof(TEntity4), typeof(TEntity5), typeof(TEntity6));
+            var result = this.QueryTemplateSingle(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3),
+                typeof(TEntity4), typeof(TEntity5), typeof(TEntity6));
             if (null != result)
             {
-                return ((TEntity1)result[0], (TEntity2)result[1], (TEntity3)result[2], (TEntity4)result[3], (TEntity5)result[4], (TEntity6)result[5]);
+                return ((TEntity1)result[0], (TEntity2)result[1], (TEntity3)result[2], (TEntity4)result[3],
+                    (TEntity5)result[4], (TEntity6)result[5]);
             }
+
             return default((TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6));
         }
-        public (TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7) QuerySingle<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7>(IEntityMetaDataProvider provider, SqlQuery query)
+
+        public (TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7) QuerySingle<TEntity1, TEntity2,
+            TEntity3, TEntity4, TEntity5, TEntity6, TEntity7>(IEntityMetaDataProvider provider, SqlQuery query)
         {
-            var result = this.QueryTemplateSingle(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3), typeof(TEntity4), typeof(TEntity5), typeof(TEntity6), typeof(TEntity7));
+            var result = this.QueryTemplateSingle(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3),
+                typeof(TEntity4), typeof(TEntity5), typeof(TEntity6), typeof(TEntity7));
             if (null != result)
             {
-                return ((TEntity1)result[0], (TEntity2)result[1], (TEntity3)result[2], (TEntity4)result[3], (TEntity5)result[4], (TEntity6)result[5], (TEntity7)result[6]);
+                return ((TEntity1)result[0], (TEntity2)result[1], (TEntity3)result[2], (TEntity4)result[3],
+                    (TEntity5)result[4], (TEntity6)result[5], (TEntity7)result[6]);
             }
+
             return default((TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7));
         }
-
 
 
         public IList<(TEntity1, TEntity2)> Query<TEntity1, TEntity2>(IEntityMetaDataProvider provider, SqlQuery query)
@@ -168,9 +197,12 @@
                     ret.Add(((TEntity1)arr[0], (TEntity2)arr[1]));
                 }
             }
+
             return ret;
         }
-        public IList<(TEntity1, TEntity2, TEntity3)> Query<TEntity1, TEntity2, TEntity3>(IEntityMetaDataProvider provider, SqlQuery query)
+
+        public IList<(TEntity1, TEntity2, TEntity3)> Query<TEntity1, TEntity2, TEntity3>(
+            IEntityMetaDataProvider provider, SqlQuery query)
         {
             var result = this.QueryTemplate(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3));
             var ret = new List<(TEntity1, TEntity2, TEntity3)>(result.Count);
@@ -181,11 +213,15 @@
                     ret.Add(((TEntity1)arr[0], (TEntity2)arr[1], (TEntity3)arr[2]));
                 }
             }
+
             return ret;
         }
-        public IList<(TEntity1, TEntity2, TEntity3, TEntity4)> Query<TEntity1, TEntity2, TEntity3, TEntity4>(IEntityMetaDataProvider provider, SqlQuery query)
+
+        public IList<(TEntity1, TEntity2, TEntity3, TEntity4)> Query<TEntity1, TEntity2, TEntity3, TEntity4>(
+            IEntityMetaDataProvider provider, SqlQuery query)
         {
-            var result = this.QueryTemplate(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3), typeof(TEntity4));
+            var result = this.QueryTemplate(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3),
+                typeof(TEntity4));
             var ret = new List<(TEntity1, TEntity2, TEntity3, TEntity4)>(result.Count);
             if (result.Count != 0)
             {
@@ -194,11 +230,15 @@
                     ret.Add(((TEntity1)arr[0], (TEntity2)arr[1], (TEntity3)arr[2], (TEntity4)arr[3]));
                 }
             }
+
             return ret;
         }
-        public IList<(TEntity1, TEntity2, TEntity3, TEntity4, TEntity5)> Query<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5>(IEntityMetaDataProvider provider, SqlQuery query)
+
+        public IList<(TEntity1, TEntity2, TEntity3, TEntity4, TEntity5)> Query<TEntity1, TEntity2, TEntity3, TEntity4,
+            TEntity5>(IEntityMetaDataProvider provider, SqlQuery query)
         {
-            var result = this.QueryTemplate(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3), typeof(TEntity4), typeof(TEntity5));
+            var result = this.QueryTemplate(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3),
+                typeof(TEntity4), typeof(TEntity5));
             var ret = new List<(TEntity1, TEntity2, TEntity3, TEntity4, TEntity5)>(result.Count);
             if (result.Count != 0)
             {
@@ -207,32 +247,43 @@
                     ret.Add(((TEntity1)arr[0], (TEntity2)arr[1], (TEntity3)arr[2], (TEntity4)arr[3], (TEntity5)arr[4]));
                 }
             }
+
             return ret;
         }
-        public IList<(TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6)> Query<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6>(IEntityMetaDataProvider provider, SqlQuery query)
+
+        public IList<(TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6)> Query<TEntity1, TEntity2, TEntity3,
+            TEntity4, TEntity5, TEntity6>(IEntityMetaDataProvider provider, SqlQuery query)
         {
-            var result = this.QueryTemplate(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3), typeof(TEntity4), typeof(TEntity5), typeof(TEntity6));
+            var result = this.QueryTemplate(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3),
+                typeof(TEntity4), typeof(TEntity5), typeof(TEntity6));
             var ret = new List<(TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6)>(result.Count);
             if (result.Count != 0)
             {
                 foreach (object[] arr in result)
                 {
-                    ret.Add(((TEntity1)arr[0], (TEntity2)arr[1], (TEntity3)arr[2], (TEntity4)arr[3], (TEntity5)arr[4], (TEntity6)arr[5]));
+                    ret.Add(((TEntity1)arr[0], (TEntity2)arr[1], (TEntity3)arr[2], (TEntity4)arr[3], (TEntity5)arr[4],
+                        (TEntity6)arr[5]));
                 }
             }
+
             return ret;
         }
-        public IList<(TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7)> Query<TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7>(IEntityMetaDataProvider provider, SqlQuery query)
+
+        public IList<(TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7)> Query<TEntity1, TEntity2,
+            TEntity3, TEntity4, TEntity5, TEntity6, TEntity7>(IEntityMetaDataProvider provider, SqlQuery query)
         {
-            var result = this.QueryTemplate(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3), typeof(TEntity4), typeof(TEntity5), typeof(TEntity6));
+            var result = this.QueryTemplate(provider, query, typeof(TEntity1), typeof(TEntity2), typeof(TEntity3),
+                typeof(TEntity4), typeof(TEntity5), typeof(TEntity6));
             var ret = new List<(TEntity1, TEntity2, TEntity3, TEntity4, TEntity5, TEntity6, TEntity7)>(result.Count);
             if (result.Count != 0)
             {
                 foreach (object[] arr in result)
                 {
-                    ret.Add(((TEntity1)arr[0], (TEntity2)arr[1], (TEntity3)arr[2], (TEntity4)arr[3], (TEntity5)arr[4], (TEntity6)arr[5], (TEntity7)arr[6]));
+                    ret.Add(((TEntity1)arr[0], (TEntity2)arr[1], (TEntity3)arr[2], (TEntity4)arr[3], (TEntity5)arr[4],
+                        (TEntity6)arr[5], (TEntity7)arr[6]));
                 }
             }
+
             return ret;
         }
     }

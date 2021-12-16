@@ -1,4 +1,4 @@
-﻿namespace Ionix.Utils
+﻿namespace Ionix.Data.Utils
 {
     using System;
     using System.Dynamic;
@@ -46,7 +46,7 @@
 
         //extenden for ReflectionExtensions primitive types and SqlQueryParameter.Create
         //ReflectionExtensions.IsPrimitive
-        public static readonly Type ObjectType = typeof(Object);//Dynamic İçin Eklendi
+        public static readonly Type ObjectType = typeof(Object); //Dynamic İçin Eklendi
         public static readonly Type ExpandoObjectType = typeof(ExpandoObject);
 
         //SqlQueryParameter.Create

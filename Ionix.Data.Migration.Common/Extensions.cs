@@ -1,4 +1,4 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
     using System;
     using System.ComponentModel;
@@ -28,6 +28,7 @@
                     return ((DescriptionAttribute)attrs[0]).Description;
                 }
             }
+
             //If we have no description attribute, just return the ToString of the enum
             return enumerationValue.ToString();
         }

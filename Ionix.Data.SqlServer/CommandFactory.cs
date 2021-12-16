@@ -1,5 +1,6 @@
 ﻿namespace Ionix.Data.SqlServer
 {
+    using Common;
     using System;
     using System.Data.SqlClient;
 
@@ -7,7 +8,8 @@
     {
         public CommandFactory(IDbAccess dataAccess)
             : base(dataAccess)
-        { }
+        {
+        }
 
         public override char ParameterPrefix => GlobalInternal.Prefix;
 

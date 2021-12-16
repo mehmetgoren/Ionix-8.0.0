@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System;
     using System.Collections.Generic;
@@ -23,9 +23,10 @@
 
 
         private int? commandTimeout;
-        public int CommandTimeout 
+
+        public int CommandTimeout
         {
-            get 
+            get
             {
                 if (this.commandTimeout.HasValue)
                     return this.commandTimeout.Value;
@@ -45,6 +46,7 @@
                 this.Connection.Dispose();
                 this.Connection = null;
             }
+
             if (null != this.events)
                 this.events.Dispose();
         }

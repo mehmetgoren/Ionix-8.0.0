@@ -1,4 +1,4 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
     using System;
 
@@ -7,9 +7,9 @@
         public MigrationException(string message)
             : base(message)
         {
-
         }
-        public MigrationException(string message, Exception innerException) 
+
+        public MigrationException(string message, Exception innerException)
             : base(message, innerException)
         {
         }

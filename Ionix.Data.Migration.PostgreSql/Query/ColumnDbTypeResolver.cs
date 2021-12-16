@@ -1,23 +1,25 @@
-﻿namespace Ionix.Migration.PostgreSql
+﻿namespace Ionix.Data.Migration.PostgreSql
 {
     using Utils;
-    using Ionix.Utils.Extensions;
+    using Utils.Extensions;
+    using Data.Common;
+    using Common;
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Reflection;
-    using Data;
 
     public class ColumnDbTypeResolver : IColumnDbTypeResolver
     {
         public static readonly ColumnDbTypeResolver Instance = new ColumnDbTypeResolver();
+
         private ColumnDbTypeResolver()
         {
-
         }
 
         private static readonly object syncRoot = new object();
         private IDictionary<Type, Type> _cache = null;
+
         private IDictionary<Type, Type> Cache
         {
             get
@@ -62,7 +64,7 @@
         private Column IfNoJsonColumnAttribute(PropertyMetaData metaData)
         {
             SchemaInfo schema = metaData.Schema;
-            Type netType = schema.DataType;//pi alında nullable olabilir.
+            Type netType = schema.DataType; //pi alında nullable olabilir.
             if (netType == CachedTypes.String)
             {
                 if (schema.MaxLength > 0)
@@ -181,7 +183,8 @@
             }
 
             if (null == ret && throwExIfNotFound)
-                throw new NotSupportedException($"could not find a suitable postgres type for:{metaData.Schema.DataType}");
+                throw new NotSupportedException(
+                    $"could not find a suitable postgres type for:{metaData.Schema.DataType}");
 
             ret.CopyPropertiesFrom(metaData);
 

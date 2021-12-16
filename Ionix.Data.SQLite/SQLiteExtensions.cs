@@ -4,7 +4,8 @@
     using System;
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
-    using Ionix.Utils.Extensions;
+    using Utils.Extensions;
+    using Common;
 
     public static class SQLiteExtensions
     {
@@ -30,8 +31,10 @@
                         sql = Regex.Replace(sql, pattern, replace);
                     }
                 }
+
                 return sql;
             }
+
             return String.Empty;
         }
 
@@ -44,7 +47,8 @@
                 return "NULL";
 
             else if (parameterValueType.In(CachedTypes.String, CachedTypes.Guid, CachedTypes.Nullable_Guid,
-                CachedTypes.Char, CachedTypes.Nullable_Char, CachedTypes.DateTime, CachedTypes.Nullable_DateTime))
+                         CachedTypes.Char, CachedTypes.Nullable_Char, CachedTypes.DateTime,
+                         CachedTypes.Nullable_DateTime))
                 return '\'' + parameterValue.ToString() + '\'';
             else if (parameterValueType == CachedTypes.Boolean || parameterValueType == CachedTypes.Nullable_Boolean)
                 return (Boolean)parameterValue ? "true" : "false";

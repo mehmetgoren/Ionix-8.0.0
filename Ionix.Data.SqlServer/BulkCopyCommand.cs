@@ -1,6 +1,7 @@
 ﻿namespace Ionix.Data.SqlServer
 {
     using Utils.Extensions;
+    using Common;
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -10,6 +11,7 @@
     public class BulkCopyCommand : IBulkCopyCommand
     {
         private readonly SqlConnection conn;
+
         public BulkCopyCommand(SqlConnection conn)
         {
             if (null == conn)
@@ -66,6 +68,7 @@
                     return s.WriteToServerAsync(dataTable.CreateDataReader());
                 }
             }
+
             return Task.Delay(0);
         }
 

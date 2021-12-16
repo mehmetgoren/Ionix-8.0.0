@@ -1,5 +1,6 @@
 ﻿namespace Ionix.Data.SqlServer
 {
+    using Common;
     using System.Text;
 
     internal static class GlobalInternal
@@ -8,6 +9,7 @@
 
         private static readonly object lockSqlServerBeginStatement = new object();
         private static string sqlServerBeginStatement;
+
         internal static string SqlServerBeginStatement
         {
             get
@@ -33,9 +35,9 @@
         }
 
 
-
         private static readonly object lockSqlServerEndStatement = new object();
         private static string sqlServerEndStatement;
+
         internal static string SqlServerEndStatement
         {
             get
@@ -80,7 +82,6 @@
 
         private ValueSetter()
         {
-
         }
 
         public override char Prefix => GlobalInternal.Prefix;

@@ -1,6 +1,7 @@
 ﻿namespace Ionix.Data.SqlServer
 {
     using Utils.Extensions;
+    using Common;
     using System;
 
     public class FluentPaging : FluentPagingBase<FluentPaging>
@@ -15,10 +16,11 @@
                     query.Sql(column);
                     query.Sql(", ");
                 }
+
                 query.Sql(" ROW_NUMBER() OVER (ORDER BY ")
-                .Sql(this.orderBy).Sql(") AS RowNumber")
-                .Sql(" FROM ").Sql(this.from).Sql(" ) SELECT * FROM Paged WHERE RowNumber BETWEEN @0 AND @1")
-                .Parameter("0", this.GetFromItems()).Parameter("1", this.GetToItems());
+                    .Sql(this.orderBy).Sql(") AS RowNumber")
+                    .Sql(" FROM ").Sql(this.from).Sql(" ) SELECT * FROM Paged WHERE RowNumber BETWEEN @0 AND @1")
+                    .Parameter("0", this.GetFromItems()).Parameter("1", this.GetToItems());
 
                 return query;
             }

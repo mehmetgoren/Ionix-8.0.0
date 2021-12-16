@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using Utils.Collections;
     using System.Linq;
@@ -13,7 +13,8 @@
         private readonly bool throwExceptionOnNonCachedOperation;
         private readonly Expression<Func<TEntity, object>>[] keys;
 
-        public CachedRepository(ICommandAdapter cmd, bool throwExceptionOnNonCachedOperation, params Expression<Func<TEntity, object>>[] keys)
+        public CachedRepository(ICommandAdapter cmd, bool throwExceptionOnNonCachedOperation,
+            params Expression<Func<TEntity, object>>[] keys)
             : base(cmd)
         {
             if (!keys.Any())
@@ -26,6 +27,7 @@
 
         private readonly object syncRoot = new object();
         private volatile IndexedEntityList<TEntity> list;
+
         private IndexedEntityList<TEntity> List
         {
             get
@@ -42,6 +44,7 @@
                         }
                     }
                 }
+
                 return this.list;
             }
         }
@@ -55,6 +58,7 @@
         {
             return this.List.Find(idValues);
         }
+
         public override Task<TEntity> SelectByIdAsync(params object[] keys)
         {
             return Task.FromResult(this.List.Find(keys));
@@ -67,6 +71,7 @@
 
             return base.SelectSingle(extendedQuery);
         }
+
         public override Task<TEntity> SelectSingleAsync(SqlQuery extendedQuery)
         {
             if (this.throwExceptionOnNonCachedOperation)
@@ -83,6 +88,7 @@
 
             return this.List.ToList();
         }
+
         public override Task<IList<TEntity>> SelectAsync(SqlQuery extendedQuery)
         {
             if (null != extendedQuery && this.throwExceptionOnNonCachedOperation)
@@ -98,6 +104,7 @@
 
             return base.QuerySingle(query);
         }
+
         public override Task<TEntity> QuerySingleAsync(SqlQuery query)
         {
             if (this.throwExceptionOnNonCachedOperation)
@@ -113,6 +120,7 @@
 
             return base.Query(query);
         }
+
         public override Task<IList<TEntity>> QueryAsync(SqlQuery query)
         {
             if (this.throwExceptionOnNonCachedOperation)
@@ -128,6 +136,7 @@
             {
                 this.List.Replace(entity);
             }
+
             return ret;
         }
 
@@ -138,6 +147,7 @@
             {
                 this.List.Replace(entity);
             }
+
             return ret;
         }
 
@@ -148,8 +158,10 @@
             {
                 this.List.Add(entity);
             }
+
             return ret;
         }
+
         public override async Task<int> InsertAsync(TEntity entity, params string[] insertFields)
         {
             int ret = await base.InsertAsync(entity, insertFields);
@@ -157,6 +169,7 @@
             {
                 this.List.Add(entity);
             }
+
             return ret;
         }
 
@@ -167,8 +180,10 @@
             {
                 this.List.Add(entity); //Add zaten Dictionary Indexer' ı Kullanıyor.
             }
+
             return ret;
         }
+
         public override async Task<int> UpsertAsync(TEntity entity, string[] updatedFields, string[] insertFields)
         {
             int ret = await base.UpsertAsync(entity, updatedFields, insertFields);
@@ -176,6 +191,7 @@
             {
                 this.List.Add(entity); //Add zaten Dictionary Indexer' ı Kullanıyor.
             }
+
             return ret;
         }
 
@@ -186,8 +202,10 @@
             {
                 this.List.Remove(entity);
             }
+
             return ret;
         }
+
         public override async Task<int> DeleteAsync(TEntity entity)
         {
             int ret = await base.DeleteAsync(entity);
@@ -195,6 +213,7 @@
             {
                 this.List.Remove(entity);
             }
+
             return ret;
         }
 
@@ -208,8 +227,10 @@
                     this.List.Replace(entity);
                 }
             }
+
             return ret;
         }
+
         public override async Task<int> BatchUpdateAsync(IEnumerable<TEntity> entityList, params string[] updatedFields)
         {
             int ret = await base.BatchUpdateAsync(entityList, updatedFields);
@@ -220,6 +241,7 @@
                     this.List.Replace(entity);
                 }
             }
+
             return ret;
         }
 
@@ -233,8 +255,10 @@
                     this.List.Add(entity);
                 }
             }
+
             return ret;
         }
+
         public override async Task<int> BatchInsertAsync(IEnumerable<TEntity> entityList, params string[] insertFields)
         {
             int ret = await base.BatchInsertAsync(entityList, insertFields);
@@ -245,6 +269,7 @@
                     this.List.Add(entity);
                 }
             }
+
             return ret;
         }
 
@@ -258,9 +283,12 @@
                     this.List.Add(entity);
                 }
             }
+
             return ret;
         }
-        public override async Task<int> BatchUpsertAsync(IEnumerable<TEntity> entityList, string[] updatedFields, string[] insertFieldss)
+
+        public override async Task<int> BatchUpsertAsync(IEnumerable<TEntity> entityList, string[] updatedFields,
+            string[] insertFieldss)
         {
             int ret = await base.BatchUpsertAsync(entityList, updatedFields, insertFieldss);
             if (ret > 0)
@@ -270,6 +298,7 @@
                     this.List.Add(entity);
                 }
             }
+
             return ret;
         }
 
@@ -287,6 +316,7 @@
             {
                 this.Refresh();
             }
+
             return ret;
         }
 
@@ -304,6 +334,7 @@
             {
                 this.Refresh();
             }
+
             return ret;
         }
     }

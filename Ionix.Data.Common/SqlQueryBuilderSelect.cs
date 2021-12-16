@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System.Text;
 
@@ -28,6 +28,7 @@
                 text.Append(columnName);
                 text.Append(", ");
             }
+
             text.Remove(text.Length - 2, 1);
 
             text.Append("FROM ");
@@ -56,6 +57,7 @@
                 text.Append(columnName);
                 text.Append(", ");
             }
+
             text.Remove(text.Length - 2, 1);
 
             text.Append("FROM ");

@@ -3,8 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Data;
-    using Ionix.Utils.Extensions;
+    using Data.Common;
+    using Common;
+    using Utils.Extensions;
 
     internal sealed class CreateTableQueryBuilder : ISqlQueryProvider
     {
@@ -32,13 +33,15 @@
                 if (column.IsPrimaryKey)
                 {
                     if (null != primaryKey)
-                        throw new MultipleIdentityColumnFoundException($"{this.TableName} has more than one primary key.");
+                        throw new MultipleIdentityColumnFoundException(
+                            $"{this.TableName} has more than one primary key.");
 
                     primaryKey = column;
                 }
 
                 q.Combine(column.ToQuery()).Sql(",").Sql(Environment.NewLine);
             }
+
             if (!this.TableForeignKeyList.IsNullOrEmpty())
             {
                 foreach (var fk in this.TableForeignKeyList)
@@ -51,7 +54,7 @@
             }
 
 
-            q.Text.Remove(q.Text.Length - 3, 3);
+            q.Text.Remove(q.Text.Length - 2, 2);
 
             q.Text.AppendLine();
             q.Sql(");");

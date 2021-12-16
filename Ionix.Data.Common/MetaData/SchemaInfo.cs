@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using Utils;
     using System;
@@ -18,18 +18,19 @@
 
             this.maxLength = new Locked<int>(-1);
         }
+
         public SchemaInfo(string columnName, Type dataType)
             : this(columnName, dataType, true)
         {
-
         }
+
         public SchemaInfo(string columnName)
             : this(columnName, CachedTypes.String)
         {
-
         }
 
         private Locked<string> columnName;
+
         public string ColumnName
         {
             get
@@ -42,6 +43,7 @@
         }
 
         private Locked<Type> dataType;
+
         public Type DataType
         {
             get => this.dataType.Value;
@@ -49,6 +51,7 @@
         }
 
         private Locked<bool> isNullable;
+
         public bool IsNullable
         {
             get => this.isNullable.Value;
@@ -56,6 +59,7 @@
         }
 
         private Locked<bool> isKey;
+
         public bool IsKey
         {
             get => this.isKey.Value;
@@ -63,6 +67,7 @@
         }
 
         private Locked<bool> readOnly;
+
         public bool ReadOnly
         {
             get => this.readOnly.Value;
@@ -70,6 +75,7 @@
         }
 
         private Locked<StoreGeneratedPattern> databaseGeneratedOption;
+
         public StoreGeneratedPattern DatabaseGeneratedOption
         {
             get => this.databaseGeneratedOption.Value;
@@ -78,6 +84,7 @@
 
         //i.e. getdate(), deleted(0), sequence.nextVal. But nopt db computed giving by client. and Non-parameter field
         private Locked<string> defaultValue;
+
         public string DefaultValue
         {
             get
@@ -91,6 +98,7 @@
 
 
         private Locked<int> maxLength;
+
         public int MaxLength
         {
             get => this.maxLength.Value;
@@ -98,6 +106,7 @@
         }
 
         private Locked<int> order;
+
         public int Order
         {
             get => this.order.Value;
@@ -105,8 +114,8 @@
         }
 
 
-
         private Locked<SqlValueType> sqlValueType;
+
         public SqlValueType SqlValueType
         {
             get => this.sqlValueType.Value;
@@ -115,24 +124,29 @@
 
 
         #region equals
+
         public bool Equals(SchemaInfo other)
         {
             if (null != other)
                 return this.ColumnName.Equals(other.ColumnName);
             return false;
         }
+
         public override bool Equals(object obj)
         {
             return this.Equals(obj as SchemaInfo);
         }
+
         public override int GetHashCode()
         {
             return this.ColumnName.GetHashCode();
         }
+
         public override string ToString()
         {
             return this.ColumnName;
         }
+
         #endregion
 
         public void Lock()
@@ -154,6 +168,7 @@
 
             this.isLocked = true;
         }
+
         public void Unlock()
         {
             this.columnName.Unlock();
@@ -175,6 +190,7 @@
 
             this.isLocked = false;
         }
+
         private bool isLocked;
         public bool IsLocked => this.isLocked;
 

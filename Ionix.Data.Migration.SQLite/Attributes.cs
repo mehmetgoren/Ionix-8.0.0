@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel;
+    using Common;
 
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
@@ -15,6 +16,7 @@
         {
             this.DbType = dbType;
         }
+
         public ColumnAttribute(string dbTypeName)
         {
             this.DbTypeName = dbTypeName;
@@ -31,31 +33,22 @@
 
     public enum SQLiteDbType
     {
-        [Description(Columns.Integer.DbType)]
-        Integer,
+        [Description(Columns.Integer.DbType)] Integer,
 
-        [Description(Columns.Varchar.DbType)]
-        Varchar,
+        [Description(Columns.Varchar.DbType)] Varchar,
 
-        [Description(Columns.Text.DbType)]
-        Text,
+        [Description(Columns.Text.DbType)] Text,
 
-        [Description(Columns.Int.DbType)]
-        Int,
+        [Description(Columns.Int.DbType)] Int,
 
-        [Description(Columns.Blob.DbType)]
-        Blob,
+        [Description(Columns.Blob.DbType)] Blob,
 
-        [Description(Columns.Boolean.DbType)]
-        Boolean,
+        [Description(Columns.Boolean.DbType)] Boolean,
 
-        [Description(Columns.DateTime.DbType)]
-        DateTime,
+        [Description(Columns.DateTime.DbType)] DateTime,
 
-        [Description(Columns.Numeric.DbType)]
-        Numeric,
+        [Description(Columns.Numeric.DbType)] Numeric,
 
-        [Description(Columns.Real.DbType)]
-        Real
+        [Description(Columns.Real.DbType)] Real
     }
 }

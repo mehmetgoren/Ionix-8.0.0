@@ -1,11 +1,11 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System;
     using System.Collections.Generic;
     using System.Text;
 
     //Like ı bir parametere ile oracle a uygun hale getir.
-    public sealed class FilterCriteria : ISqlQueryProvider//Array lerde Kullanılacağı İçin Struct yapılmadı.
+    public sealed class FilterCriteria : ISqlQueryProvider //Array lerde Kullanılacağı İçin Struct yapılmadı.
     {
         private readonly string columnName;
         private string parameterName;
@@ -26,12 +26,15 @@
                 if (values[j] == null)
                     throw new NullReferenceException($"'values[{j}]'");
             }
+
             if (op == ConditionOperator.Between)
             {
                 if (values.Length < 2)
-                    throw new ArgumentException($"'Between' Operatörü İçin Eksik Sayıda Parametre --> 'values.Legth = '{values.Length}'");
+                    throw new ArgumentException(
+                        $"'Between' Operatörü İçin Eksik Sayıda Parametre --> 'values.Legth = '{values.Length}'");
                 if (values.Length > 2)
-                    throw new ArgumentException($"'Between' Operatörü İçin Fazla Sayıda Parametre --> 'values.Legth = '{values.Length}'");
+                    throw new ArgumentException(
+                        $"'Between' Operatörü İçin Fazla Sayıda Parametre --> 'values.Legth = '{values.Length}'");
             }
             else if (op != ConditionOperator.In && values.Length > 1)
             {
@@ -64,7 +67,8 @@
 
                 parameters.Add(parName, this.values[0]);
             }
-            else if (this.op == ConditionOperator.StartsWith || this.op == ConditionOperator.Contains || this.op == ConditionOperator.EndsWith)
+            else if (this.op == ConditionOperator.StartsWith || this.op == ConditionOperator.Contains ||
+                     this.op == ConditionOperator.EndsWith)
             {
                 text.Append(" LIKE ");
                 text.Append(this.prefix);
@@ -96,6 +100,7 @@
 
                             parameters.Add(parName + j, values[j]);
                         }
+
                         text.Remove(text.Length - 2, 2);
                         text.Append(")");
                         break;
@@ -118,6 +123,7 @@
                         throw new NotSupportedException(this.op.ToString());
                 }
             }
+
             return query;
         }
 
@@ -169,6 +175,7 @@
             item.ParameterName = parameterName;
             base.Add(item);
         }
+
         public void Add(string columnName, ConditionOperator op, params object[] values)
         {
             this.Add(columnName, null, op, values);
@@ -199,16 +206,17 @@
                         text.Append(" AND ");
                     }
                 }
+
                 text.Remove(text.Length - 5, 5);
                 return query;
             }
 
             return null;
         }
+
         public SqlQuery ToQuery()
         {
             return this.ToQuery(null);
         }
     }
 }
-

@@ -1,12 +1,14 @@
 ﻿namespace Ionix.Data.SQLite
 {
     using System;
+    using Common;
 
     public class CommandFactory : CommandFactoryBase
     {
         public CommandFactory(IDbAccess dataAccess)
             : base(dataAccess)
-        { }
+        {
+        }
 
         public override char ParameterPrefix => GlobalInternal.Prefix;
 

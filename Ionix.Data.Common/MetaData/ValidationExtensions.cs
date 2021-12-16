@@ -1,11 +1,10 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Reflection;
     using Utils.Extensions;
-
-
+    
     public static class ValidationExtensions
     {
         public static bool IsModelValid<TEntity>(this TEntity entity)
@@ -13,7 +12,8 @@
             bool ret = null != entity;
             if (ret)
             {
-                foreach (PropertyInfo pi in typeof(TEntity).GetTypeInfo().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                foreach (PropertyInfo pi in typeof(TEntity).GetTypeInfo()
+                             .GetProperties(BindingFlags.Public | BindingFlags.Instance))
                 {
                     object value = pi.GetValue(entity);
 
@@ -27,7 +27,7 @@
                                 ret = false;
                                 goto Endfunc;
                             }
-                        } 
+                        }
                     }
                 }
             }
@@ -48,6 +48,7 @@
                     if (!ret) return false;
                 }
             }
+
             return ret;
         }
     }

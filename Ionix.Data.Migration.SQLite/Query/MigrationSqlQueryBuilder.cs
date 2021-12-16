@@ -1,18 +1,23 @@
 ﻿namespace Ionix.Data.Migration.SQLite
 {
-    using Ionix.Utils.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-    using Data;
+    using Data.Common;
+    using Common;
+    using Utils.Extensions;
 
     public class MigrationSqlQueryBuilder : IMigrationSqlQueryBuilder
     {
         public static readonly MigrationSqlQueryBuilder Instance = new MigrationSqlQueryBuilder();
-        private MigrationSqlQueryBuilder() { }
+
+        private MigrationSqlQueryBuilder()
+        {
+        }
 
         //tableattribute check edilip gönderiliyor types' a
-        public virtual SqlQuery CreateTable(IEnumerable<Type> types, DbSchemaMetaDataProvider provider, IColumnDbTypeResolver typeResolver)
+        public virtual SqlQuery CreateTable(IEnumerable<Type> types, DbSchemaMetaDataProvider provider,
+            IColumnDbTypeResolver typeResolver)
         {
             SqlQuery query = new SqlQuery();
             if (!types.IsNullOrEmpty() && null != typeResolver)
@@ -27,7 +32,8 @@
                         columns.Add(column);
                     }
 
-                    CreateTableQueryBuilder item = new CreateTableQueryBuilder(metaData.TableName, columns, type.GetCustomAttributes<TableForeignKeyAttribute>());
+                    CreateTableQueryBuilder item = new CreateTableQueryBuilder(metaData.TableName, columns,
+                        type.GetCustomAttributes<TableForeignKeyAttribute>());
                     query.Combine(item.ToQuery());
                     query.Text.AppendLine();
 

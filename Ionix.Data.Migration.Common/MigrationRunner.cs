@@ -1,9 +1,9 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Data;
+    using Ionix.Data.Common;
 
     public class MigrationRunner
     {
@@ -11,7 +11,7 @@
         {
             this.Cmd = cmd ?? throw new ArgumentNullException(nameof(cmd));
             this.DatabaseStatus = new DatabaseMigrationStatus(this);
-            this. MigrationReflection = new MigrationReflection();
+            this.MigrationReflection = new MigrationReflection();
         }
 
         public ICommandAdapter Cmd { get; }
@@ -24,10 +24,11 @@
             {
                 if (this.Cmd.Factory.DataAccess is DbAccess dbAccess)
                 {
-                    var conn = dbAccess.Connection;// .Client.Settings.Server;
+                    var conn = dbAccess.Connection; // .Client.Settings.Server;
 
-                    return $"{conn.Database}@{conn.DataSource}"; 
+                    return $"{conn.Database}@{conn.DataSource}";
                 }
+
                 return "DbAccess casting failed, could not identify server info";
             }
         }
@@ -47,13 +48,16 @@
         protected void ApplyMigrations(IEnumerable<Migration> migrations)
         {
             migrations.ToList()
-                      .ForEach(ApplyMigration);
+                .ForEach(ApplyMigration);
         }
 
 
         protected void ApplyMigration(Migration migration)
         {
-            Console.WriteLine(new { Message = "Applying migration", migration.Version, migration.Description, DatabaseName = this.Database });
+            Console.WriteLine(new
+            {
+                Message = "Applying migration", migration.Version, migration.Description, DatabaseName = this.Database
+            });
 
             var appliedMigration = this.DatabaseStatus.StartMigration(migration);
             try
@@ -74,8 +78,8 @@
                 }
 
                 OnMigrationException(migration, exception);
-
             }
+
             this.DatabaseStatus.CompleteMigration(appliedMigration);
         }
 
@@ -105,7 +109,7 @@
             });
 
             var migrations = this.MigrationReflection.GetMigrationsAfter(currentVersion)
-                                             .Where(m => m.Version <= updateToVersion);
+                .Where(m => m.Version <= updateToVersion);
 
             ApplyMigrations(migrations);
         }

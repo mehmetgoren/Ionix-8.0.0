@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using Utils.Extensions;
     using System;
@@ -21,7 +21,8 @@
 
     public sealed class ExecuteCommandCompleteEventArgs<TEntity> : EventArgs
     {
-        internal ExecuteCommandCompleteEventArgs(IEnumerable<TEntity> entityList, EntityCommandType commandType, Exception commandException)
+        internal ExecuteCommandCompleteEventArgs(IEnumerable<TEntity> entityList, EntityCommandType commandType,
+            Exception commandException)
         {
             this.EntityList = entityList;
             this.CommandType = commandType;
@@ -64,16 +65,21 @@
                 }
             }
         }
+
         private bool OnPreExecuteCommand(IEnumerable<TEntity> entityList, EntityCommandType commandType)
         {
             bool cancel = false;
-            EventHandler<PreExecuteCommandEventArgs<TEntity>> fPtr = (EventHandler<PreExecuteCommandEventArgs<TEntity>>)this.events[RespositoryEventsKeys.PreExecuteCommandEvent];
+            EventHandler<PreExecuteCommandEventArgs<TEntity>> fPtr =
+                (EventHandler<PreExecuteCommandEventArgs<TEntity>>)this.events[
+                    RespositoryEventsKeys.PreExecuteCommandEvent];
             if (fPtr != null)
             {
-                PreExecuteCommandEventArgs<TEntity> e = new PreExecuteCommandEventArgs<TEntity>(entityList, commandType);
+                PreExecuteCommandEventArgs<TEntity>
+                    e = new PreExecuteCommandEventArgs<TEntity>(entityList, commandType);
                 fPtr(this, e);
                 cancel = e.Cancel;
             }
+
             return cancel;
         }
 
@@ -94,12 +100,17 @@
                 }
             }
         }
-        private void OnExecuteCommandComplete(IEnumerable<TEntity> entityList, EntityCommandType commandType, Exception commandException)
+
+        private void OnExecuteCommandComplete(IEnumerable<TEntity> entityList, EntityCommandType commandType,
+            Exception commandException)
         {
-            EventHandler<ExecuteCommandCompleteEventArgs<TEntity>> fPtr = (EventHandler<ExecuteCommandCompleteEventArgs<TEntity>>)this.events[RespositoryEventsKeys.ExecuteCommandCompletedEvent];
+            EventHandler<ExecuteCommandCompleteEventArgs<TEntity>> fPtr =
+                (EventHandler<ExecuteCommandCompleteEventArgs<TEntity>>)this.events[
+                    RespositoryEventsKeys.ExecuteCommandCompletedEvent];
             if (fPtr != null)
             {
-                ExecuteCommandCompleteEventArgs<TEntity> e = new ExecuteCommandCompleteEventArgs<TEntity>(entityList, commandType, commandException);
+                ExecuteCommandCompleteEventArgs<TEntity> e =
+                    new ExecuteCommandCompleteEventArgs<TEntity>(entityList, commandType, commandException);
                 fPtr(this, e);
             }
         }
@@ -112,7 +123,8 @@
             private Exception commandException;
             private readonly bool isEmptyList;
 
-            internal CommandScope(Repository<TEntity> parent, IEnumerable<TEntity> entityList, EntityCommandType commandType)
+            internal CommandScope(Repository<TEntity> parent, IEnumerable<TEntity> entityList,
+                EntityCommandType commandType)
             {
                 this.parent = parent;
                 this.entityList = entityList;
@@ -123,7 +135,6 @@
             internal CommandScope(Repository<TEntity> parent, TEntity entity, EntityCommandType commandType)
                 : this(parent, entity.ToSingleItemList(), commandType)
             {
-
             }
 
             internal T Execute<T>(Func<T> func)
@@ -141,6 +152,7 @@
                         throw;
                     }
                 }
+
                 return returnValue;
             }
 

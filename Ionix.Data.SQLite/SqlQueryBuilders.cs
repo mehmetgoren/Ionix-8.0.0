@@ -4,6 +4,7 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using Common;
 
     public class EntitySqlQueryBuilderUpdate : IEntitySqlQueryBuilder
     {
@@ -48,6 +49,7 @@
 
                 text.Append(',');
             }
+
             text.Remove(text.Length - 1, 1);
 
             query.Combine(SqlQueryHelper.CreateWhereSqlByKeys(metaData, index, GlobalInternal.Prefix, entity));
@@ -65,7 +67,8 @@
 
         public HashSet<string> InsertFields { get; set; }
 
-        public virtual SqlQuery CreateQuery(object entity, IEntityMetaData metaData, int index, out PropertyMetaData identity)
+        public virtual SqlQuery CreateQuery(object entity, IEntityMetaData metaData, int index,
+            out PropertyMetaData identity)
         {
             if (null == entity)
                 throw new ArgumentNullException(nameof(entity));
@@ -118,6 +121,7 @@
 
                 text.Append(',');
             }
+
             text.Remove(text.Length - 1, 1);
             text.Append(')');
             if (null != identity)

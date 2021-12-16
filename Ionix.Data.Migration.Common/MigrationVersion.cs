@@ -1,4 +1,4 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
     using System;
 
@@ -24,17 +24,24 @@
 
             var versionParts = version.Split('.');
             if (versionParts.Length != 3)
-                throw new ArgumentException("Versions must have format: major.minor.revision, this doesn't match: " + version);
+                throw new ArgumentException("Versions must have format: major.minor.revision, this doesn't match: " +
+                                            version);
 
             var majorString = versionParts[0];
-            this.Major = Int32.TryParse(majorString, out int major) ? major : throw new ArgumentException("Invalid major version value: " + majorString);
+            this.Major = Int32.TryParse(majorString, out int major)
+                ? major
+                : throw new ArgumentException("Invalid major version value: " + majorString);
 
 
             var minorString = versionParts[1];
-            this.Minor = Int32.TryParse(minorString, out int minor) ? minor : throw new ArgumentException("Invalid major version value: " + minorString);
+            this.Minor = Int32.TryParse(minorString, out int minor)
+                ? minor
+                : throw new ArgumentException("Invalid major version value: " + minorString);
 
             var revisionString = versionParts[2];
-            this.Revision = Int32.TryParse(revisionString, out int revision) ? revision : throw new ArgumentException("Invalid major version value: " + revisionString);
+            this.Revision = Int32.TryParse(revisionString, out int revision)
+                ? revision
+                : throw new ArgumentException("Invalid major version value: " + revisionString);
         }
 
         public MigrationVersion(int major, int minor, int revision)
@@ -87,6 +94,7 @@
             {
                 return 0;
             }
+
             return this > other ? 1 : -1;
         }
 
@@ -98,6 +106,7 @@
         }
 
         private const int HashSeed = 397;
+
         public override int GetHashCode()
         {
             unchecked

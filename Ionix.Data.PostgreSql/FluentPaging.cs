@@ -1,6 +1,7 @@
 ﻿namespace Ionix.Data.PostgreSql
 {
     using Utils.Extensions;
+    using Common;
     using System;
 
     public class FluentPaging : FluentPagingBase<FluentPaging>
@@ -9,12 +10,13 @@
         {
             if (!this.select.IsNullOrEmpty() && !String.IsNullOrEmpty(this.from))
             {
-                SqlQuery query = "SELECT ".ToQuery();//T.*,
+                SqlQuery query = "SELECT ".ToQuery(); //T.*,
                 foreach (string column in this.select)
                 {
                     query.Sql(column)
-                    .Sql(", ");
+                        .Sql(", ");
                 }
+
                 query.Text.Remove(query.Text.Length - 2, 2);
                 query.Sql(" FROM ").Sql(this.from);
 

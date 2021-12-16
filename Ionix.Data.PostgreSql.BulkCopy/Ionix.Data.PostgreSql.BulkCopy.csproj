@@ -3,7 +3,16 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Ionix.Data.Common\Ionix.Data.Common.csproj" />
+      <ProjectReference Include="..\Ionix.Data.PostgreSql\Ionix.Data.PostgreSql.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Npgsql" Version="6.0.1" />
+    </ItemGroup>
 
 </Project>

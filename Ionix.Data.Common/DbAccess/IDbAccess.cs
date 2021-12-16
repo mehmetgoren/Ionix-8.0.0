@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System;
     using System.Data;
@@ -20,6 +20,5 @@
 
     public interface ITransactionalDbAccess : IDbAccess, IDbTransaction
     {
-
     }
 }

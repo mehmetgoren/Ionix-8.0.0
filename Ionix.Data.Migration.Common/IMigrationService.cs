@@ -1,7 +1,7 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
     using System.Collections.Generic;
-    using Data;
+    using Ionix.Data.Common;
 
     public interface IMigrationService
     {

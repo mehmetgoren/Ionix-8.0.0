@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using Utils;
     using Utils.Extensions;
@@ -25,16 +25,18 @@
 
         public SqlQueryParameter()
             : this(null, null, ParameterDirection.Input, true)
-        { }
+        {
+        }
 
         public SqlQueryParameter(string parameterName, object value)
             : this(parameterName, value, ParameterDirection.Input, true)
         {
-
         }
+
         public SqlQueryParameter(string parameterName, object value, ParameterDirection direction)
             : this(parameterName, value, direction, true)
-        { }
+        {
+        }
 
         public SqlQueryParameter(string parameterName, object value, ParameterDirection direction, bool isNullable)
         {
@@ -61,13 +63,15 @@
 
         public bool IsNullable { get; set; }
 
-        #region  IEquatable<SqlQueryParameter>
+        #region IEquatable<SqlQueryParameter>
+
         public bool Equals(SqlQueryParameter other)
         {
             if (null != other)
                 return this.ParameterName.Equals(other.ParameterName, StringComparison.OrdinalIgnoreCase);
             return false;
         }
+
         public override bool Equals(object obj)
         {
             SqlQueryParameter other = obj as SqlQueryParameter;
@@ -75,10 +79,12 @@
                 return this.Equals(other);
             return false;
         }
+
         public override int GetHashCode()
         {
             return this.ParameterName.GetHashCode();
         }
+
         #endregion
 
         public override string ToString()
@@ -103,6 +109,7 @@
 
         private static readonly object TypeMapSync = new object();
         private static Dictionary<Type, DbType> typeMap;
+
         private static Dictionary<Type, DbType> TypeMap
         {
             get

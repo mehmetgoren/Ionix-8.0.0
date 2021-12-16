@@ -1,6 +1,7 @@
 ﻿namespace Ionix.Data.Migration.SQLite
 {
-    using Ionix.Data;
+    using Data.Common;
+    using Common;
     using System;
     using System.Reflection;
     using System.Text;
@@ -10,12 +11,13 @@
     /// </summary>
     internal static class Columns
     {
-
         internal abstract class SQLiteColumn : Column
         {
             public sealed override SqlQuery ToQuery()
             {
-                return $"{this.Name} {this.DataType}{(this.IsPrimaryKey? " PRIMARY KEY":"")}{this.GetNullStatement()}{this.GetDefaultStatement()}".ToQuery();
+                return
+                    $"{this.Name} {this.DataType}{(this.IsPrimaryKey ? " PRIMARY KEY" : "")}{this.GetNullStatement()}{this.GetDefaultStatement()}"
+                        .ToQuery();
             }
         }
 
@@ -100,6 +102,7 @@
                     {
                         sb.Append(',').Append(this.Precision);
                     }
+
                     sb.Append(")");
                 }
             }

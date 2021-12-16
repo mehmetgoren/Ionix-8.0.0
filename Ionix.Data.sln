@@ -1,6 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ionix.Data", "Ionix.Data\Ionix.Data.csproj", "{1C4DE957-0E30-4438-9169-A36D26C94BB4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ionix.Data.Utils", "Ionix.Data.Utils\Ionix.Data.Utils.csproj", "{1C4DE957-0E30-4438-9169-A36D26C94BB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ionix.Data.Common", "Ionix.Data.Common\Ionix.Data.Common.csproj", "{07DB65E1-C03E-4549-8C8D-FB4CF8250773}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ionix.Data.Oracle", "Ionix.Data.Oracle\Ionix.Data.Oracle.csproj", "{9ED5AFB9-CAEE-4E08-9B17-ACC2CC54A289}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ionix.Data.PostgreSql", "Ionix.Data.PostgreSql\Ionix.Data.PostgreSql.csproj", "{256057B3-A52A-4933-81F2-AB2485C75CBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ionix.Data.PostgreSql.BulkCopy", "Ionix.Data.PostgreSql.BulkCopy\Ionix.Data.PostgreSql.BulkCopy.csproj", "{6DA56253-80BD-4CEB-817F-D2C1C0679736}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ionix.Data.SQLite", "Ionix.Data.SQLite\Ionix.Data.SQLite.csproj", "{4E99F20B-5AEA-41FE-AA9C-13F5D0B002E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ionix.Data.SqlServer", "Ionix.Data.SqlServer\Ionix.Data.SqlServer.csproj", "{13F95BEE-FFEC-4ABA-A394-034D11F438DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migration", "Migration", "{EB0D5E96-7F9C-4961-8654-A10E05134F59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ionix.Data.Migration.Common", "Ionix.Data.Migration.Common\Ionix.Data.Migration.Common.csproj", "{A7DDB2C0-3BBF-49DA-A771-EC845F9CAF98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ionix.Data.Migration.PostgreSql", "Ionix.Data.Migration.PostgreSql\Ionix.Data.Migration.PostgreSql.csproj", "{76BC93A5-A5E0-4E10-BBA7-8BAF2FE8F676}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ionix.Data.Migration.SQLite", "Ionix.Data.Migration.SQLite\Ionix.Data.Migration.SQLite.csproj", "{7C573C62-E0B7-4371-AACE-20FEBF8A9A76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ionix.Data.Migration.SQLiteTests", "Ionix.Data.Migration.SQLiteTests\Ionix.Data.Migration.SQLiteTests.csproj", "{AFD53AD3-7A8D-4214-911E-10C0DD9D148A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +34,51 @@ Global
 		{1C4DE957-0E30-4438-9169-A36D26C94BB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C4DE957-0E30-4438-9169-A36D26C94BB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C4DE957-0E30-4438-9169-A36D26C94BB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07DB65E1-C03E-4549-8C8D-FB4CF8250773}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07DB65E1-C03E-4549-8C8D-FB4CF8250773}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07DB65E1-C03E-4549-8C8D-FB4CF8250773}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07DB65E1-C03E-4549-8C8D-FB4CF8250773}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9ED5AFB9-CAEE-4E08-9B17-ACC2CC54A289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9ED5AFB9-CAEE-4E08-9B17-ACC2CC54A289}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9ED5AFB9-CAEE-4E08-9B17-ACC2CC54A289}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9ED5AFB9-CAEE-4E08-9B17-ACC2CC54A289}.Release|Any CPU.Build.0 = Release|Any CPU
+		{256057B3-A52A-4933-81F2-AB2485C75CBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{256057B3-A52A-4933-81F2-AB2485C75CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{256057B3-A52A-4933-81F2-AB2485C75CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{256057B3-A52A-4933-81F2-AB2485C75CBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DA56253-80BD-4CEB-817F-D2C1C0679736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DA56253-80BD-4CEB-817F-D2C1C0679736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DA56253-80BD-4CEB-817F-D2C1C0679736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DA56253-80BD-4CEB-817F-D2C1C0679736}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E99F20B-5AEA-41FE-AA9C-13F5D0B002E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E99F20B-5AEA-41FE-AA9C-13F5D0B002E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E99F20B-5AEA-41FE-AA9C-13F5D0B002E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E99F20B-5AEA-41FE-AA9C-13F5D0B002E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13F95BEE-FFEC-4ABA-A394-034D11F438DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13F95BEE-FFEC-4ABA-A394-034D11F438DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13F95BEE-FFEC-4ABA-A394-034D11F438DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13F95BEE-FFEC-4ABA-A394-034D11F438DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7DDB2C0-3BBF-49DA-A771-EC845F9CAF98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7DDB2C0-3BBF-49DA-A771-EC845F9CAF98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7DDB2C0-3BBF-49DA-A771-EC845F9CAF98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7DDB2C0-3BBF-49DA-A771-EC845F9CAF98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76BC93A5-A5E0-4E10-BBA7-8BAF2FE8F676}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76BC93A5-A5E0-4E10-BBA7-8BAF2FE8F676}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76BC93A5-A5E0-4E10-BBA7-8BAF2FE8F676}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76BC93A5-A5E0-4E10-BBA7-8BAF2FE8F676}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C573C62-E0B7-4371-AACE-20FEBF8A9A76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C573C62-E0B7-4371-AACE-20FEBF8A9A76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C573C62-E0B7-4371-AACE-20FEBF8A9A76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C573C62-E0B7-4371-AACE-20FEBF8A9A76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFD53AD3-7A8D-4214-911E-10C0DD9D148A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFD53AD3-7A8D-4214-911E-10C0DD9D148A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFD53AD3-7A8D-4214-911E-10C0DD9D148A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFD53AD3-7A8D-4214-911E-10C0DD9D148A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A7DDB2C0-3BBF-49DA-A771-EC845F9CAF98} = {EB0D5E96-7F9C-4961-8654-A10E05134F59}
+		{76BC93A5-A5E0-4E10-BBA7-8BAF2FE8F676} = {EB0D5E96-7F9C-4961-8654-A10E05134F59}
+		{7C573C62-E0B7-4371-AACE-20FEBF8A9A76} = {EB0D5E96-7F9C-4961-8654-A10E05134F59}
+		{AFD53AD3-7A8D-4214-911E-10C0DD9D148A} = {EB0D5E96-7F9C-4961-8654-A10E05134F59}
 	EndGlobalSection
 EndGlobal

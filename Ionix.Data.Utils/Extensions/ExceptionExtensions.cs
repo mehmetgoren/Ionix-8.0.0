@@ -1,4 +1,4 @@
-﻿namespace Ionix.Utils.Extensions
+﻿namespace Ionix.Data.Utils.Extensions
 {
     using System;
 
@@ -11,6 +11,7 @@
                 if (null != ex.InnerException)
                     return FindRoot(ex.InnerException);
             }
+
             return ex;
         }
     }

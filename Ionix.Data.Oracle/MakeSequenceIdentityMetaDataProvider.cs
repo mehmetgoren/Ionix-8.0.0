@@ -1,12 +1,14 @@
 ﻿namespace Ionix.Data.Oracle
 {
     using System;
+    using Ionix.Data.Common;
 
     //Oracle da NonIdentity ve Otomatik Sequence olan Alanlar İçin.
     //Proxy Pattern
     public sealed class MakeSequenceIdentityMetaDataProvider : IEntityMetaDataProvider
     {
         private readonly IEntityMetaDataProvider concrete;
+
         public MakeSequenceIdentityMetaDataProvider(IEntityMetaDataProvider concrete)
         {
             if (null == concrete)
@@ -18,7 +20,7 @@
         internal static void MakeKeyIdentity(IEntityMetaData metaData)
         {
             PropertyMetaData primaryKey = metaData.GetPrimaryKey();
-            if (null != primaryKey)//has no or multiple primary key found means no primary key.
+            if (null != primaryKey) //has no or multiple primary key found means no primary key.
             {
                 SchemaInfo schema = primaryKey.Schema;
                 StoreGeneratedPattern pattern = schema.DatabaseGeneratedOption;

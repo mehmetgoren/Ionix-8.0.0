@@ -4,6 +4,7 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using Ionix.Data.Common;
 
     public class EntitySqlQueryBuilderUpdate : IEntitySqlQueryBuilder
     {
@@ -48,6 +49,7 @@
 
                 text.Append(',');
             }
+
             text.Remove(text.Length - 1, 1);
 
             query.Combine(SqlQueryHelper.CreateWhereSqlByKeys(metaData, index, GlobalInternal.Prefix, entity));
@@ -78,7 +80,8 @@
 
         public HashSet<string> InsertFields { get; set; }
 
-        public virtual SqlQuery CreateQuery(object entity, IEntityMetaData metaData, int index, out PropertyMetaData sequenceIdentity)
+        public virtual SqlQuery CreateQuery(object entity, IEntityMetaData metaData, int index,
+            out PropertyMetaData sequenceIdentity)
         {
             if (null == entity)
                 throw new ArgumentNullException(nameof(entity));
@@ -100,16 +103,17 @@
 
                 switch (schema.DatabaseGeneratedOption)
                 {
-                    case StoreGeneratedPattern.Identity://Oracle 12c ile test edilip bu kısımda çalışılabilr hale getirilecek.
+                    case StoreGeneratedPattern.Identity
+                        : //Oracle 12c ile test edilip bu kısımda çalışılabilr hale getirilecek.
                     case StoreGeneratedPattern.Computed:
-                        continue;// not in insert list.
+                        continue; // not in insert list.
 
                     case StoreGeneratedPattern.AutoGenerateSequence:
                         if (null != sequenceIdentity)
                             throw new MultipleIdentityColumnFoundException(entity);
 
                         sequenceIdentity = property;
-                        break;//Identity ise insert list e giriyor.
+                        break; //Identity ise insert list e giriyor.
                     default:
                         if (insertFieldsEnabled && !this.InsertFields.Contains(schema.ColumnName))
                             continue;
@@ -134,7 +138,8 @@
 
                 if (addSequenceIdentity && sequenceIdentity.Schema.Equals(schema))
                 {
-                    text.Append(SequenceManager.GetSequenceName(this.dataAccess, metaData.TableName, sequenceIdentity.Schema.ColumnName));
+                    text.Append(SequenceManager.GetSequenceName(this.dataAccess, metaData.TableName,
+                        sequenceIdentity.Schema.ColumnName));
                     text.Append(".NEXTVAL,");
                     addSequenceIdentity = false;
                 }
@@ -145,6 +150,7 @@
                     text.Append(',');
                 }
             }
+
             text.Remove(text.Length - 1, 1);
             text.Append(')');
             if (null != sequenceIdentity)
@@ -158,9 +164,13 @@
                 string parameterName = metaData.GetParameterName(sequenceIdentity, index);
                 text.Append(parameterName);
 
-                SqlQueryParameter identityParameter = SqlQueryHelper.EnsureHasParameter(query, parameterName, sequenceIdentity, entity);
-                identityParameter.Direction = this.isUpsert ? System.Data.ParameterDirection.InputOutput : System.Data.ParameterDirection.Output;
+                SqlQueryParameter identityParameter =
+                    SqlQueryHelper.EnsureHasParameter(query, parameterName, sequenceIdentity, entity);
+                identityParameter.Direction = this.isUpsert
+                    ? System.Data.ParameterDirection.InputOutput
+                    : System.Data.ParameterDirection.Output;
             }
+
             if (this.UseSemicolon)
                 text.Append(';');
 
@@ -192,7 +202,8 @@
 
         public HashSet<string> InsertFields { get; set; }
 
-        public virtual SqlQuery CreateQuery(object entity, IEntityMetaData metaData, int index, out PropertyMetaData sequenceIdentity)
+        public virtual SqlQuery CreateQuery(object entity, IEntityMetaData metaData, int index,
+            out PropertyMetaData sequenceIdentity)
         {
             EntitySqlQueryBuilderUpdate builderUpdate = new EntitySqlQueryBuilderUpdate() { UseSemicolon = true };
             builderUpdate.UpdatedFields = this.UpdatedFields;
@@ -209,7 +220,8 @@
             text.Append("IF SQL%ROWCOUNT = 0 THEN ");
             text.AppendLine();
 
-            EntitySqlQueryBuilderInsert builderInsert = new EntitySqlQueryBuilderInsert(this.dataAccess, true) { UseSemicolon = true };
+            EntitySqlQueryBuilderInsert builderInsert = new EntitySqlQueryBuilderInsert(this.dataAccess, true)
+                { UseSemicolon = true };
             builderInsert.InsertFields = this.InsertFields;
 
             query.Combine(builderInsert.CreateQuery(entity, metaData, index, out sequenceIdentity));

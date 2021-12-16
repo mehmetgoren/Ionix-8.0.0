@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System;
     using System.Collections.Generic;
@@ -20,6 +20,7 @@
         {
             this.hash.Add(parameter);
         }
+
         public void Add(string parameterName, object value, ParameterDirection direction, bool isNullable)
         {
             SqlQueryParameter parameter = new SqlQueryParameter(parameterName, value, direction, isNullable);
@@ -30,6 +31,7 @@
         {
             this.Add(parameterName, value, direction, true);
         }
+
         public void Add(string parameterName, object value)
         {
             this.Add(parameterName, value, ParameterDirection.Input, true);
@@ -43,14 +45,17 @@
                     this.Add(item);
             }
         }
+
         public SqlQueryParameter Find(string parameterName)
         {
             if (!String.IsNullOrEmpty(parameterName))
             {
                 return this.hash.Find(parameterName);
             }
+
             return null;
         }
+
         public void Clear()
         {
             this.hash.Clear();
@@ -61,6 +66,7 @@
             foreach (KeyValuePair<string, SqlQueryParameter> kvp in this.hash.dic)
                 yield return kvp.Value;
         }
+
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
@@ -74,12 +80,14 @@
             {
                 this.dic[parameter.ParameterName] = parameter;
             }
+
             public SqlQueryParameter Find(string parameterName)
             {
                 SqlQueryParameter ret;
                 this.dic.TryGetValue(parameterName, out ret);
                 return ret;
             }
+
             public void Clear()
             {
                 this.dic.Clear();

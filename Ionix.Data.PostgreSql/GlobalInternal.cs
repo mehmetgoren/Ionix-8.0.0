@@ -1,6 +1,7 @@
 ﻿namespace Ionix.Data.PostgreSql
 {
     using System;
+    using Common;
 
     internal static class GlobalInternal
     {
@@ -16,7 +17,6 @@
 
         private ValueSetter()
         {
-
         }
 
         public override char Prefix => GlobalInternal.Prefix;

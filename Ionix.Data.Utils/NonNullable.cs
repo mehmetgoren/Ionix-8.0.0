@@ -1,4 +1,4 @@
-﻿namespace Ionix.Utils
+﻿namespace Ionix.Data.Utils
 {
     using System;
 
@@ -13,6 +13,7 @@
             {
                 throw new ArgumentNullException(nameof(value));
             }
+
             this.value = value;
         }
 
@@ -24,25 +25,31 @@
                 {
                     throw new NullReferenceException("Value");
                 }
+
                 return this.value;
             }
         }
+
         public bool Equals(NonNullable<T> other)
         {
             return this.value.Equals(other.value);
         }
+
         public override bool Equals(object obj)
         {
             if (obj is NonNullable<T>)
             {
                 return this.Equals((NonNullable<T>)obj);
             }
+
             return false;
         }
+
         public override int GetHashCode()
         {
             return this.value.GetHashCode();
         }
+
         public override string ToString()
         {
             return this.value.ToString();
@@ -52,10 +59,12 @@
         {
             return n1.Equals(n2);
         }
+
         public static bool operator !=(NonNullable<T> n1, NonNullable<T> n2)
         {
             return !(n1 == n2);
         }
+
         public static implicit operator NonNullable<T>(T value)
         {
             return new NonNullable<T>(value);

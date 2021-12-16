@@ -1,10 +1,11 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
     using System;
 
     public abstract class DatabaseVersionBase
     {
         private MigrationVersion _version;
+
         public virtual string Version
         {
             get => this._version;

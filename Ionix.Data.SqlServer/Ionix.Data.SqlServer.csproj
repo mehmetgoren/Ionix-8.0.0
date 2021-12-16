@@ -3,7 +3,15 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Ionix.Data.Common\Ionix.Data.Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    </ItemGroup>
 
 </Project>

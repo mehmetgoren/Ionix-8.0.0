@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System;
     using System.Collections;
@@ -38,7 +38,7 @@
         public DbDataReader Concrete => this.concrete;
 
 
-        #region  |   virtual   |
+        #region |   virtual   |
 
         public override int VisibleFieldCount => this.concrete.VisibleFieldCount;
 
@@ -46,13 +46,16 @@
 
         public override T GetFieldValue<T>(int ordinal) => this.concrete.GetFieldValue<T>(ordinal);
 
-        public override Task<T> GetFieldValueAsync<T>(int ordinal, CancellationToken cancellationToken) => this.concrete.GetFieldValueAsync<T>(ordinal, cancellationToken);
+        public override Task<T> GetFieldValueAsync<T>(int ordinal, CancellationToken cancellationToken) =>
+            this.concrete.GetFieldValueAsync<T>(ordinal, cancellationToken);
 
-        public override Type GetProviderSpecificFieldType(int ordinal) => this.concrete.GetProviderSpecificFieldType(ordinal);
+        public override Type GetProviderSpecificFieldType(int ordinal) =>
+            this.concrete.GetProviderSpecificFieldType(ordinal);
 
         public override object GetProviderSpecificValue(int ordinal) => this.concrete.GetProviderSpecificValue(ordinal);
 
-        public override int GetProviderSpecificValues(object[] values) => this.concrete.GetProviderSpecificValues(values);
+        public override int GetProviderSpecificValues(object[] values) =>
+            this.concrete.GetProviderSpecificValues(values);
 
         public override DataTable GetSchemaTable() => this.concrete.GetSchemaTable();
 
@@ -60,11 +63,14 @@
 
         public override TextReader GetTextReader(int ordinal) => this.concrete.GetTextReader(ordinal);
 
-        public override Task<bool> IsDBNullAsync(int ordinal, CancellationToken cancellationToken) => this.concrete.IsDBNullAsync(ordinal, cancellationToken);
+        public override Task<bool> IsDBNullAsync(int ordinal, CancellationToken cancellationToken) =>
+            this.concrete.IsDBNullAsync(ordinal, cancellationToken);
 
-        public override Task<bool> NextResultAsync(CancellationToken cancellationToken) => this.concrete.NextResultAsync(cancellationToken);
+        public override Task<bool> NextResultAsync(CancellationToken cancellationToken) =>
+            this.concrete.NextResultAsync(cancellationToken);
 
-        public override Task<bool> ReadAsync(CancellationToken cancellationToken) => this.concrete.ReadAsync(cancellationToken);
+        public override Task<bool> ReadAsync(CancellationToken cancellationToken) =>
+            this.concrete.ReadAsync(cancellationToken);
 
         /// <summary>
         /// this why i created this proxy type.
@@ -73,7 +79,7 @@
         protected override void Dispose(bool disposing)
         {
             //base.Dispose(disposing);base.Dispose calls Close and we don't need such an action. 
-    
+
             if (disposing)
             {
                 this.concrete?.Dispose();
@@ -83,7 +89,9 @@
         }
 
 
-        protected override DbDataReader GetDbDataReader(int ordinal)//public DbDataReader GetData(int ordinal) method call this. many ado.net provider dos not support this.
+        protected override DbDataReader
+            GetDbDataReader(
+                int ordinal) //public DbDataReader GetData(int ordinal) method call this. many ado.net provider dos not support this.
         {
             var result = this.concrete.GetType().GetMethod(nameof(GetDbDataReader),
                 BindingFlags.Instance | BindingFlags.NonPublic).Invoke(this.concrete, new object[] { ordinal });
@@ -94,7 +102,7 @@
         #endregion
 
 
-        #region  |   abstract   |
+        #region |   abstract   |
 
         public override object this[int ordinal] => this.concrete[ordinal];
 

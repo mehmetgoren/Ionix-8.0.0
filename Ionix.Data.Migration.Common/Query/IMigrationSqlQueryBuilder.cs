@@ -1,11 +1,12 @@
-﻿namespace Ionix.Migration
+﻿namespace Ionix.Data.Migration.Common
 {
     using System;
     using System.Collections.Generic;
-    using Data;
+    using Ionix.Data.Common;
 
     public interface IMigrationSqlQueryBuilder
     {
-        SqlQuery CreateTable(IEnumerable<Type> types, DbSchemaMetaDataProvider provider, IColumnDbTypeResolver typeResolver);
+        SqlQuery CreateTable(IEnumerable<Type> types, DbSchemaMetaDataProvider provider,
+            IColumnDbTypeResolver typeResolver);
     }
 }

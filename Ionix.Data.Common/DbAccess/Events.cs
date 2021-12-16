@@ -1,4 +1,4 @@
-﻿namespace Ionix.Data
+﻿namespace Ionix.Data.Common
 {
     using System;
 
@@ -14,11 +14,13 @@
 
         public SqlQuery Query { get; }
     }
+
     public delegate void PreExecuteSqlEventHandler(PreExecuteSqlEventArgs e);
 
     public sealed class ExecuteSqlCompleteEventArgs : PreExecuteSqlEventArgs
     {
-        internal ExecuteSqlCompleteEventArgs(DbAccess dataAccess, SqlQuery query, DateTime executionStart, DateTime executionFinish, Exception executionException)
+        internal ExecuteSqlCompleteEventArgs(DbAccess dataAccess, SqlQuery query, DateTime executionStart,
+            DateTime executionFinish, Exception executionException)
             : base(dataAccess, query)
         {
             this.ExecutionStart = executionStart;
@@ -36,5 +38,6 @@
 
         public bool Succeeded => this.ExecutionException == null;
     }
+
     public delegate void ExecuteSqlCompleteEventHandler(ExecuteSqlCompleteEventArgs e);
 }

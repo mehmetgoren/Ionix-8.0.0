@@ -1,6 +1,7 @@
 ﻿namespace Ionix.Data.SqlServer
 {
     using Utils.Extensions;
+    using Common;
     using System;
     using System.Collections.Generic;
     using System.Text;
@@ -45,6 +46,7 @@
 
                 text.Append(',');
             }
+
             text.Remove(text.Length - 1, 1);
 
             query.Combine(SqlQueryHelper.CreateWhereSqlByKeys(metaData, index, GlobalInternal.Prefix, entity));
@@ -57,7 +59,8 @@
     {
         public HashSet<string> InsertFields { get; set; }
 
-        public virtual SqlQuery CreateQuery(object entity, IEntityMetaData metaData, int index, out PropertyMetaData identity)
+        public virtual SqlQuery CreateQuery(object entity, IEntityMetaData metaData, int index,
+            out PropertyMetaData identity)
         {
             if (null == entity)
                 throw new ArgumentNullException(nameof(entity));
@@ -110,6 +113,7 @@
 
                 text.Append(',');
             }
+
             text.Remove(text.Length - 1, 1);
             text.Append(')');
             if (null != identity)
@@ -123,7 +127,8 @@
 
                 text.Append("=SCOPE_IDENTITY()");
 
-                SqlQueryParameter identityParameter = SqlQueryHelper.EnsureHasParameter(query, parameterName, identity, entity);
+                SqlQueryParameter identityParameter =
+                    SqlQueryHelper.EnsureHasParameter(query, parameterName, identity, entity);
                 identityParameter.Direction = System.Data.ParameterDirection.InputOutput;
             }
 
@@ -143,7 +148,8 @@
 
         public HashSet<string> InsertFields { get; set; }
 
-        public virtual SqlQuery CreateQuery(object entity, IEntityMetaData metaData, int index, out PropertyMetaData identity)
+        public virtual SqlQuery CreateQuery(object entity, IEntityMetaData metaData, int index,
+            out PropertyMetaData identity)
         {
             EntitySqlQueryBuilderUpdate builderUpdate = new EntitySqlQueryBuilderUpdate();
             builderUpdate.UpdatedFields = this.UpdatedFields;
