@@ -95,7 +95,7 @@
 
         internal sealed class DateTime : Column
         {
-            internal const string DbType = "timestamp";
+            internal const string DbType = "timestamp without time zone";
 
             public override string DataType => DbType;
         }
