@@ -2,7 +2,7 @@
 {
     using Common;
     using System;
-    using System.Data.SqlClient;
+    using Microsoft.Data.SqlClient;
 
     public class CommandFactory : CommandFactoryBase
     {

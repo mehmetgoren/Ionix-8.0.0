@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="87868c3d-77d6-40e9-bbfc-1f7d068c9fd2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Ionix.Data/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Ionix/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Ionix/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Ionix/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Ionix/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Ionix/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ionix.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Ionix.Data/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Ionix.Data/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Ionix.Data/.idea/indexLayout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Ionix.Data/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ionix.Data.Common/Ionix.Data.Common.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Ionix.Data.Common/Ionix.Data.Common.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ionix.Data.Migration.Common/Ionix.Data.Migration.Common.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Ionix.Data.Migration.Common/Ionix.Data.Migration.Common.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ionix.Data.Migration.PostgreSql/Ionix.Data.Migration.PostgreSql.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Ionix.Data.Migration.PostgreSql/Ionix.Data.Migration.PostgreSql.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ionix.Data.Migration.SQLite/Ionix.Data.Migration.SQLite.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Ionix.Data.Migration.SQLite/Ionix.Data.Migration.SQLite.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ionix.Data.Migration.SQLiteTests/Ionix.Data.Migration.SQLiteTests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Ionix.Data.Migration.SQLiteTests/Ionix.Data.Migration.SQLiteTests.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ionix.Data.Oracle/Ionix.Data.Oracle.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Ionix.Data.Oracle/Ionix.Data.Oracle.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ionix.Data.PostgreSql.BulkCopy/Ionix.Data.PostgreSql.BulkCopy.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Ionix.Data.PostgreSql.BulkCopy/Ionix.Data.PostgreSql.BulkCopy.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ionix.Data.PostgreSql/Ionix.Data.PostgreSql.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Ionix.Data.PostgreSql/Ionix.Data.PostgreSql.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ionix.Data.SQLite/Ionix.Data.SQLite.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Ionix.Data.SQLite/Ionix.Data.SQLite.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ionix.Data.SqlServer/BulkCopyCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Ionix.Data.SqlServer/BulkCopyCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ionix.Data.SqlServer/CommandFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Ionix.Data.SqlServer/CommandFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ionix.Data.SqlServer/Ionix.Data.SqlServer.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Ionix.Data.SqlServer/Ionix.Data.SqlServer.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ionix.Data.Utils/Ionix.Data.Utils.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Ionix.Data.Utils/Ionix.Data.Utils.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ionix.Data.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Ionix.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ionix.Data.sln.DotSettings.user" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///mnt/sdd/coding/Ionix 8.0.0/Ionix-8.0.0/Ionix.Data.SqlServer/BulkCopyCommand.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///mnt/sdd/coding/Ionix 8.0.0/Ionix-8.0.0/Ionix.Data.SqlServer/CommandFactory.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2fyPy1EgmwshoegYBrFKIbYojhL" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "/home/gokalp/.config/JetBrains/Rider2024.1/resharper-host/DecompilerCache",
+      "/home/gokalp/.config/JetBrains/Rider2024.1/resharper-host/SourcesCache",
+      "/home/gokalp/.local/share/Symbols/src"
+    ]
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="87868c3d-77d6-40e9-bbfc-1f7d068c9fd2" name="Changes" comment="" />
+      <created>1714770594458</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1714770594458</updated>
+      <workItem from="1714770595527" duration="59000" />
+      <workItem from="1714770669283" duration="708000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>
